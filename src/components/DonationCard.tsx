@@ -49,6 +49,7 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
   };
 
   const handleDonateClick = () => {
+    setAmount(donationAmount || "");
     setIsDonationDialogOpen(true);
   };
 

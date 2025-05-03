@@ -33,13 +33,13 @@ export const mockCampaigns: Campaign[] = [
   {
     id: "1",
     type: "campaign",
-    title: "Emergency Medical Supplies for Children in Crisis",
-    shortDescription: "Providing essential medical kits to children affected by the recent natural disaster",
-    fullDescription: "The recent flooding has left thousands of children without access to basic healthcare. Your donation will help us provide emergency medical kits containing antibiotics, wound care supplies, fever reducers, and rehydration salts. These kits are desperately needed as local clinics have been destroyed and medical professionals are struggling to meet the overwhelming demand with limited resources. Each kit can help treat up to 10 children for common post-disaster illnesses and injuries, potentially saving lives in this critical period.",
+    title: "Экстренная медицинская помощь для детей в кризисе",
+    shortDescription: "Предоставление необходимых медицинских наборов детям, пострадавшим от недавнего стихийного бедствия",
+    fullDescription: "Недавнее наводнение оставило тысячи детей без доступа к базовому медицинскому обслуживанию. Ваше пожертвование поможет нам предоставить экстренные медицинские наборы, содержащие антибиотики, средства для обработки ран, жаропонижающие препараты и соли для регидратации. Эти наборы крайне необходимы, поскольку местные клиники были разрушены, а медицинские работники изо всех сил пытаются удовлетворить огромный спрос при ограниченных ресурсах. Каждый набор может помочь в лечении до 10 детей с распространенными после стихийного бедствия заболеваниями и травмами, потенциально спасая жизни в этот критический период.",
     imageUrl: "https://images.unsplash.com/photo-1517022812141-23620dba5c23",
     goalAmount: 500000,
     raisedAmount: 185000,
-    category: ["children", "health", "emergency"],
+    category: ["дети", "здоровье", "экстренная помощь"],
     urgency: "high",
     transparency: "detailed",
     supportLevel: "moderate",
@@ -49,23 +49,23 @@ export const mockCampaigns: Campaign[] = [
       averageRating: 4.8,
       comments: [
         {
-          author: "Dr. Sarah M.",
-          comment: "As a pediatrician who has worked with this organization, I can vouch for their effective distribution systems. The medical kits they provide contain exactly what's needed in crisis situations.",
+          author: "Доктор Сара М.",
+          comment: "Как педиатр, работавший с этой организацией, я могу поручиться за их эффективные системы распределения. Медицинские наборы, которые они предоставляют, содержат именно то, что необходимо в кризисных ситуациях.",
           rating: 5,
           date: "2023-12-15"
         },
         {
-          author: "James T.",
-          comment: "I donated last month and received a detailed report showing exactly how my money was used. Very transparent operation.",
+          author: "Джеймс Т.",
+          comment: "Я сделал пожертвование в прошлом месяце и получил подробный отчет, показывающий, как именно были использованы мои деньги. Очень прозрачная операция.",
           rating: 5,
           date: "2023-11-28"
         }
       ]
     },
     impactMetrics: {
-      "500": "3 medical kits (helps ~30 children)",
-      "1000": "6 medical kits (helps ~60 children)",
-      "5000": "30 medical kits (helps ~300 children)"
+      "500": "3 медицинских набора (помощь ~30 детям)",
+      "1000": "6 медицинских наборов (помощь ~60 детям)",
+      "5000": "30 медицинских наборов (помощь ~300 детям)"
     },
     documentationLinks: [
       "https://example.com/financial-report-2023",
@@ -75,13 +75,13 @@ export const mockCampaigns: Campaign[] = [
   {
     id: "2",
     type: "fund",
-    title: "Sustainable Water Solutions Fund",
-    shortDescription: "Supporting long-term clean water projects in under-resourced communities",
-    fullDescription: "Access to clean water remains one of the most pressing issues in many communities worldwide. This fund supports sustainable, community-led water projects that provide lasting solutions rather than quick fixes. We partner with local experts to implement appropriate technologies such as rainwater harvesting systems, well drilling with hand pumps, and water filtration systems. All projects include education and maintenance training to ensure long-term sustainability. Your donation will be pooled with others to fund complete projects from start to finish, with communities having ownership over the solutions.",
+    title: "Фонд устойчивых водных решений",
+    shortDescription: "Поддержка долгосрочных проектов чистой воды в недостаточно обеспеченных сообществах",
+    fullDescription: "Доступ к чистой воде остается одной из самых острых проблем во многих сообществах по всему миру. Этот фонд поддерживает устойчивые проекты по водоснабжению под руководством сообществ, которые обеспечивают долгосрочные решения, а не быстрые исправления. Мы сотрудничаем с местными экспертами для внедрения соответствующих технологий, таких как системы сбора дождевой воды, бурение скважин с ручными насосами и системы фильтрации воды. Все проекты включают обучение и подготовку по техническому обслуживанию для обеспечения долгосрочной устойчивости. Ваше пожертвование будет объединено с другими для финансирования полных проектов от начала до конца, при этом сообщества будут владеть решениями.",
     imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
     goalAmount: 1000000,
     raisedAmount: 230000,
-    category: ["water", "sustainability", "infrastructure"],
+    category: ["вода", "устойчивость", "инфраструктура"],
     urgency: "medium",
     transparency: "complete",
     supportLevel: "rare",
@@ -91,23 +91,23 @@ export const mockCampaigns: Campaign[] = [
       averageRating: 4.7,
       comments: [
         {
-          author: "Emma W.",
-          comment: "I've been donating monthly to this fund for over a year. The quarterly reports are incredibly detailed and show real progress in the communities they serve.",
+          author: "Эмма В.",
+          comment: "Я делаю ежемесячные пожертвования в этот фонд уже более года. Квартальные отчеты невероятно подробны и показывают реальный прогресс в сообществах, которым они служат.",
           rating: 5,
           date: "2024-01-12"
         },
         {
-          author: "Michael P.",
-          comment: "This organization focuses on sustainability and community ownership, which I believe is the only way to create lasting change. Very impressed with their approach.",
+          author: "Михаил П.",
+          comment: "Эта организация сосредоточена на устойчивости и собственности сообщества, что, по моему мнению, является единственным способом создать долгосрочные изменения. Очень впечатлен их подходом.",
           rating: 4,
           date: "2023-11-05"
         }
       ]
     },
     impactMetrics: {
-      "1000": "Clean water for 2 families for a year",
-      "5000": "Community water filter system (serves ~50 people)",
-      "10000": "Partial well funding (serves ~200 people)"
+      "1000": "Чистая вода для 2 семей на год",
+      "5000": "Система фильтрации воды для сообщества (обслуживает ~50 человек)",
+      "10000": "Частичное финансирование скважины (обслуживает ~200 человек)"
     },
     documentationLinks: [
       "https://example.com/water-project-outcomes",
@@ -118,13 +118,13 @@ export const mockCampaigns: Campaign[] = [
   {
     id: "3",
     type: "campaign",
-    title: "Winter Shelter for Homeless Animals",
-    shortDescription: "Providing heated shelters and food for street animals during the harsh winter months",
-    fullDescription: "As temperatures drop below freezing, street animals face life-threatening conditions without adequate shelter or food. This campaign will fund the construction and placement of 50 insulated shelters throughout the city, along with a regular feeding program during the winter months. Each shelter can house 3-5 animals and is designed to maintain a life-sustaining temperature even in extreme cold. Additionally, we'll provide high-calorie food that helps animals maintain the body heat they need to survive. Our volunteer team monitors the shelters and provides veterinary care when needed.",
+    title: "Зимнее убежище для бездомных животных",
+    shortDescription: "Предоставление отапливаемых убежищ и еды для уличных животных в суровые зимние месяцы",
+    fullDescription: "Когда температура опускается ниже нуля, уличные животные сталкиваются с опасными для жизни условиями без адекватного убежища или еды. Эта кампания будет финансировать строительство и размещение 50 изолированных убежищ по всему городу, а также регулярную программу кормления в зимние месяцы. В каждом убежище может разместиться 3-5 животных, и оно предназначено для поддержания жизненно необходимой температуры даже в экстремальный холод. Кроме того, мы предоставим высококалорийную пищу, которая помогает животным поддерживать тепло тела, необходимое для выживания. Наша команда волонтеров следит за убежищами и предоставляет ветеринарную помощь при необходимости.",
     imageUrl: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
     goalAmount: 175000,
     raisedAmount: 32000,
-    category: ["animals", "local aid"],
+    category: ["животные", "местная помощь"],
     urgency: "high",
     transparency: "basic",
     supportLevel: "rare",
@@ -134,23 +134,23 @@ export const mockCampaigns: Campaign[] = [
       averageRating: 4.4,
       comments: [
         {
-          author: "Anna K.",
-          comment: "I volunteer with this group and can confirm they're doing incredible work. They're on the streets every day helping animals that have no one else.",
+          author: "Анна К.",
+          comment: "Я работаю волонтером с этой группой и могу подтвердить, что они делают невероятную работу. Они на улицах каждый день, помогая животным, у которых больше никого нет.",
           rating: 5,
           date: "2024-01-03"
         },
         {
-          author: "David L.",
-          comment: "The shelters they built last year saved dozens of cats in my neighborhood. Glad to see them expanding the program.",
+          author: "Дэвид Л.",
+          comment: "Убежища, которые они построили в прошлом году, спасли десятки кошек в моем районе. Рад видеть, что они расширяют программу.",
           rating: 4,
           date: "2023-12-20"
         }
       ]
     },
     impactMetrics: {
-      "500": "1 winter shelter + food for 1 month",
-      "2000": "4 winter shelters + food for 1 month",
-      "5000": "10 winter shelters + food for 1 month"
+      "500": "1 зимнее убежище + еда на 1 месяц",
+      "2000": "4 зимних убежища + еда на 1 месяц",
+      "5000": "10 зимних убежищ + еда на 1 месяц"
     },
     documentationLinks: [
       "https://example.com/animal-shelter-designs",
@@ -160,13 +160,13 @@ export const mockCampaigns: Campaign[] = [
   {
     id: "4",
     type: "fund",
-    title: "Community Education Initiative",
-    shortDescription: "Supporting educational programs for underserved communities focusing on digital literacy",
-    fullDescription: "In today's digital world, access to technology education is essential for future opportunities. This fund supports after-school programs, community centers, and libraries in underserved areas to provide digital literacy education, coding classes, and access to hardware and software tools. Programs are designed for various age groups, from elementary students to seniors, ensuring that entire communities can benefit. The curriculum is developed by education experts and adapted to local needs and contexts. Your donation helps cover instructor costs, equipment, learning materials, and facility expenses.",
+    title: "Инициатива общественного образования",
+    shortDescription: "Поддержка образовательных программ для малообеспеченных сообществ с фокусом на цифровой грамотности",
+    fullDescription: "В сегодняшнем цифровом мире доступ к технологическому образованию необходим для будущих возможностей. Этот фонд поддерживает программы после школы, общественные центры и библиотеки в недостаточно обеспеченных районах для предоставления образования по цифровой грамотности, курсов программирования и доступа к аппаратным и программным инструментам. Программы разработаны для различных возрастных групп, от учеников начальной школы до пожилых людей, гарантируя, что целые сообщества могут получать пользу. Учебная программа разработана экспертами в области образования и адаптирована к местным потребностям и контекстам. Ваше пожертвование помогает покрыть расходы на инструкторов, оборудование, учебные материалы и расходы на помещения.",
     imageUrl: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
     goalAmount: 750000,
     raisedAmount: 495000,
-    category: ["education", "technology", "community"],
+    category: ["образование", "технологии", "сообщество"],
     urgency: "medium",
     transparency: "detailed",
     supportLevel: "popular",
@@ -176,23 +176,23 @@ export const mockCampaigns: Campaign[] = [
       averageRating: 4.9,
       comments: [
         {
-          author: "Teacher Linda",
-          comment: "I've seen firsthand how these programs transform students' confidence and skills. They're opening doors that were previously closed to many in our community.",
+          author: "Учитель Линда",
+          comment: "Я видела собственными глазами, как эти программы преображают уверенность и навыки учеников. Они открывают двери, которые раньше были закрыты для многих в нашем сообществе.",
           rating: 5,
           date: "2024-01-15"
         },
         {
-          author: "Robert J.",
-          comment: "The multi-generational approach is brilliant. I've watched my grandfather learn to video chat with family while my niece is learning coding basics - all through the same program.",
+          author: "Роберт Дж.",
+          comment: "Подход, охватывающий разные поколения, просто блестящий. Я наблюдал, как мой дедушка учится видеочату с семьей, в то время как моя племянница изучает основы программирования – все через одну и ту же программу.",
           rating: 5,
           date: "2023-12-12"
         }
       ]
     },
     impactMetrics: {
-      "1000": "Digital literacy training for 5 students",
-      "5000": "Complete coding course for 15 students",
-      "10000": "Computer equipment for a classroom of 20"
+      "1000": "Обучение цифровой грамотности для 5 учеников",
+      "5000": "Полный курс программирования для 15 учеников",
+      "10000": "Компьютерное оборудование для класса из 20 человек"
     },
     documentationLinks: [
       "https://example.com/education-outcomes-report",
@@ -203,13 +203,13 @@ export const mockCampaigns: Campaign[] = [
   {
     id: "5",
     type: "campaign",
-    title: "Mental Health Support for Youth",
-    shortDescription: "Expanding access to mental health counseling services for teenagers and young adults",
-    fullDescription: "Mental health challenges among young people have reached crisis levels, yet many cannot access the support they need due to cost barriers or long waiting lists. This campaign funds immediate access to licensed therapists for youth in crisis, with no waiting periods or financial requirements. We partner with a network of mental health professionals who provide both emergency and ongoing care. The program includes individual therapy, group sessions, family counseling, and digital resources. Our approach prioritizes culturally sensitive care and meets young people through both in-person and telehealth options.",
+    title: "Поддержка психического здоровья молодежи",
+    shortDescription: "Расширение доступа к услугам консультирования по вопросам психического здоровья для подростков и молодых взрослых",
+    fullDescription: "Проблемы психического здоровья среди молодых людей достигли кризисного уровня, однако многие не могут получить необходимую поддержку из-за финансовых барьеров или длинных списков ожидания. Эта кампания финансирует немедленный доступ к лицензированным терапевтам для молодежи в кризисе, без периодов ожидания или финансовых требований. Мы сотрудничаем с сетью профессионалов в области психического здоровья, которые предоставляют как экстренную, так и постоянную помощь. Программа включает индивидуальную терапию, групповые сессии, семейное консультирование и цифровые ресурсы. Наш подход отдает приоритет культурно чувствительной помощи и встречает молодых людей как через личные встречи, так и через телемедицину.",
     imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
     goalAmount: 350000,
     raisedAmount: 118000,
-    category: ["youth", "health", "mental health"],
+    category: ["молодежь", "здоровье", "психическое здоровье"],
     urgency: "high",
     transparency: "detailed",
     supportLevel: "moderate",
@@ -219,28 +219,241 @@ export const mockCampaigns: Campaign[] = [
       averageRating: 4.8,
       comments: [
         {
-          author: "Anonymous Parent",
-          comment: "This program saved my daughter's life. When we couldn't afford therapy and the hospital had a 3-month waiting list, they connected us with a therapist within 48 hours.",
+          author: "Анонимный родитель",
+          comment: "Эта программа спасла жизнь моей дочери. Когда мы не могли позволить себе терапию, а в больнице был список ожидания в 3 месяца, они связали нас с терапевтом в течение 48 часов.",
           rating: 5,
           date: "2023-12-03"
         },
         {
-          author: "Sam T.",
-          comment: "As someone who benefited from this program last year, I can say the quality of care is exceptional. The therapists truly understand youth-specific challenges.",
+          author: "Сэм Т.",
+          comment: "Как человек, который получил пользу от этой программы в прошлом году, я могу сказать, что качество помощи исключительное. Терапевты действительно понимают проблемы, специфичные для молодежи.",
           rating: 5,
           date: "2023-11-22"
         }
       ]
     },
     impactMetrics: {
-      "500": "3 therapy sessions for a teen in crisis",
-      "2000": "Full month of weekly therapy for 3 teens",
-      "5000": "Crisis intervention and 3-month therapy program for 5 teens"
+      "500": "3 сеанса терапии для подростка в кризисе",
+      "2000": "Полный месяц еженедельной терапии для 3 подростков",
+      "5000": "Кризисное вмешательство и 3-месячная программа терапии для 5 подростков"
     },
     documentationLinks: [
       "https://example.com/mental-health-outcomes",
       "https://example.com/therapist-credentials",
       "https://example.com/program-methodology"
+    ]
+  },
+  {
+    id: "6",
+    type: "campaign",
+    title: "Доступное образование для детей из сельских районов",
+    shortDescription: "Создание мобильных классов и предоставление учебных материалов для детей из отдаленных деревень",
+    fullDescription: "Дети из отдаленных сельских районов часто не имеют доступа к качественному образованию из-за отсутствия школ и квалифицированных учителей. Наш проект направлен на создание мобильных классов, которые будут перемещаться между деревнями, обеспечивая доступ к образованию для всех детей. Мы также предоставляем учебники, тетради, канцтовары и технологические инструменты, необходимые для современного обучения. Наши учителя специально обучены работе в сельской местности и используют инновационные методы обучения, адаптированные к местным условиям и культуре.",
+    imageUrl: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07",
+    goalAmount: 420000,
+    raisedAmount: 140000,
+    category: ["образование", "дети", "сельское развитие"],
+    urgency: "medium",
+    transparency: "detailed",
+    supportLevel: "rare",
+    verification: true,
+    reviews: {
+      count: 12,
+      averageRating: 4.6,
+      comments: [
+        {
+          author: "Директор сельской школы",
+          comment: "Благодаря этому проекту дети из нашей деревни впервые получили доступ к качественным учебным материалам и профессиональным педагогам. Результаты просто поразительные.",
+          rating: 5,
+          date: "2023-11-15"
+        },
+        {
+          author: "Мария С.",
+          comment: "Мой сын раньше должен был ходить 7 километров до ближайшей школы. Теперь образование приходит к нему. Изменение огромное!",
+          rating: 4,
+          date: "2023-10-20"
+        }
+      ]
+    },
+    impactMetrics: {
+      "1000": "Учебные материалы для 10 детей на учебный год",
+      "3000": "Мобильный класс для одной деревни на месяц",
+      "5000": "Технологическое оборудование для одного мобильного класса"
+    },
+    documentationLinks: [
+      "https://example.com/rural-education-report",
+      "https://example.com/mobile-classroom-methodology"
+    ]
+  },
+  {
+    id: "7",
+    type: "fund",
+    title: "Фонд защиты морских экосистем",
+    shortDescription: "Сохранение и восстановление прибрежных и морских экосистем, защита морского биоразнообразия",
+    fullDescription: "Морские экосистемы сталкиваются с беспрецедентными угрозами из-за загрязнения пластиком, изменения климата и чрезмерного вылова рыбы. Наш фонд финансирует комплексные проекты по очистке пляжей и океана, восстановлению коралловых рифов, созданию морских заповедников и образовательные программы для местных сообществ. Мы сотрудничаем с морскими биологами, местными рыбаками, правительственными органами и международными организациями для достижения долгосрочного положительного воздействия. Ваше пожертвование поможет сохранить морские экосистемы для будущих поколений.",
+    imageUrl: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21",
+    goalAmount: 850000,
+    raisedAmount: 312000,
+    category: ["экология", "океан", "биоразнообразие"],
+    urgency: "medium",
+    transparency: "complete",
+    supportLevel: "moderate",
+    verification: true,
+    reviews: {
+      count: 22,
+      averageRating: 4.7,
+      comments: [
+        {
+          author: "Профессор морской биологии",
+          comment: "Работая с этим фондом уже 5 лет, я могу подтвердить их научный подход и исключительную эффективность. Их проекты действительно меняют ситуацию в наиболее уязвимых морских зонах.",
+          rating: 5,
+          date: "2024-02-10"
+        },
+        {
+          author: "Антон В.",
+          comment: "Как дайвер, я лично наблюдал за улучшениями в районах, где работает фонд. Восстановление коралловых рифов особенно впечатляет.",
+          rating: 4,
+          date: "2023-12-18"
+        }
+      ]
+    },
+    impactMetrics: {
+      "2000": "Очистка 1 км прибрежной линии",
+      "5000": "Восстановление 10 м² кораллового рифа",
+      "10000": "Создание и патрулирование морского заповедника площадью 1 гектар в течение месяца"
+    },
+    documentationLinks: [
+      "https://example.com/marine-conservation-report",
+      "https://example.com/coral-restoration-methodology",
+      "https://example.com/ocean-cleanup-results"
+    ]
+  },
+  {
+    id: "8",
+    type: "campaign",
+    title: "Продуктовые наборы для пожилых в изоляции",
+    shortDescription: "Доставка продуктовых наборов и предметов первой необходимости одиноким пожилым людям",
+    fullDescription: "Многие пожилые люди живут в социальной изоляции, особенно после пандемии. Эта кампания организует доставку еженедельных продуктовых наборов, включающих свежие продукты, консервы, предметы личной гигиены и основные лекарства. Наши волонтеры не только доставляют продукты, но и проводят время с пожилыми людьми, оказывая эмоциональную поддержку и проверяя их благополучие. Для многих пожилых людей эти визиты становятся единственным социальным контактом в течение недели. Мы стремимся не только обеспечить физические потребности, но и бороться с одиночеством.",
+    imageUrl: "https://images.unsplash.com/photo-1452960962994-acf4fd70b632",
+    goalAmount: 250000,
+    raisedAmount: 87000,
+    category: ["пожилые", "продовольствие", "социальная помощь"],
+    urgency: "high",
+    transparency: "basic",
+    supportLevel: "moderate",
+    verification: true,
+    reviews: {
+      count: 19,
+      averageRating: 4.9,
+      comments: [
+        {
+          author: "Валентина П., 78 лет",
+          comment: "Эта программа буквально спасла меня. После перелома бедра я не могла выходить из дома, а родственники живут в другом городе. Волонтеры стали моей второй семьей.",
+          rating: 5,
+          date: "2024-01-05"
+        },
+        {
+          author: "Александр К., социальный работник",
+          comment: "Как социальный работник я регулярно направляю пожилых людей в эту программу. Качество предоставляемой помощи превосходит все ожидания.",
+          rating: 5,
+          date: "2023-11-30"
+        }
+      ]
+    },
+    impactMetrics: {
+      "1000": "Продуктовые наборы для 2 пожилых людей на месяц",
+      "3000": "Продуктовые наборы и базовые лекарства для 5 пожилых людей на месяц",
+      "5000": "Комплексная поддержка 7 пожилых людей в течение месяца, включая доставку продуктов и регулярное общение"
+    },
+    documentationLinks: [
+      "https://example.com/elderly-support-program",
+      "https://example.com/isolation-impact-report"
+    ]
+  },
+  {
+    id: "9",
+    type: "fund",
+    title: "Фонд инклюзивных технологий",
+    shortDescription: "Разработка и распространение технологических решений для людей с ограниченными возможностями",
+    fullDescription: "Наш фонд специализируется на разработке, адаптации и распространении технологических решений, которые делают цифровой мир доступным для людей с различными формами инвалидности. Мы финансируем создание специализированного программного обеспечения и устройств, поддерживаем исследования в области ассистивных технологий и предоставляем готовые решения тем, кто в них нуждается. От скринридеров для незрячих до адаптивных интерфейсов для людей с моторными нарушениями – наша цель гарантировать, что технологический прогресс служит всем членам общества.",
+    imageUrl: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e",
+    goalAmount: 1200000,
+    raisedAmount: 780000,
+    category: ["технологии", "инклюзивность", "доступность"],
+    urgency: "medium",
+    transparency: "complete",
+    supportLevel: "popular",
+    verification: true,
+    reviews: {
+      count: 31,
+      averageRating: 4.8,
+      comments: [
+        {
+          author: "Николай П., пользователь технологий для слабовидящих",
+          comment: "Благодаря разработанному фондом программному обеспечению я смог вернуться к работе программистом, несмотря на потерю зрения. Их технологии действительно меняют жизнь.",
+          rating: 5,
+          date: "2024-02-18"
+        },
+        {
+          author: "Центр реабилитации 'Новые горизонты'",
+          comment: "Сотрудничество с фондом позволило нам оснастить наш центр передовыми технологическими решениями, что значительно повысило эффективность реабилитации наших подопечных.",
+          rating: 5,
+          date: "2023-12-05"
+        }
+      ]
+    },
+    impactMetrics: {
+      "3000": "Адаптивное устройство ввода для одного пользователя",
+      "7000": "Специализированное программное обеспечение для 5 пользователей",
+      "15000": "Комплексное технологическое решение для небольшого реабилитационного центра"
+    },
+    documentationLinks: [
+      "https://example.com/inclusive-tech-research",
+      "https://example.com/accessibility-solutions-catalog",
+      "https://example.com/impact-assessment-2023"
+    ]
+  },
+  {
+    id: "10",
+    type: "campaign",
+    title: "Спортивный центр для детей из неблагополучных районов",
+    shortDescription: "Создание безопасного спортивного пространства и программы наставничества для подростков из группы риска",
+    fullDescription: "В районах с высоким уровнем преступности и ограниченными возможностями для молодежи подростки особенно уязвимы перед негативным влиянием улицы. Наша кампания направлена на создание многофункционального спортивного центра, который станет не только местом для занятий спортом, но и площадкой для личностного развития. Профессиональные тренеры и наставники будут работать с подростками, прививая им дисциплину, командный дух, уверенность в себе и навыки лидерства через спортивные программы. Центр будет предлагать различные виды спорта, включая футбол, баскетбол, боевые искусства, а также образовательные мероприятия.",
+    imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5",
+    goalAmount: 680000,
+    raisedAmount: 215000,
+    category: ["молодежь", "спорт", "социальная адаптация"],
+    urgency: "medium",
+    transparency: "detailed",
+    supportLevel: "rare",
+    verification: true,
+    reviews: {
+      count: 14,
+      averageRating: 4.6,
+      comments: [
+        {
+          author: "Максим Л., местный учитель",
+          comment: "Я вижу, как меняются мои ученики, посещающие подобный центр в соседнем районе. Они становятся более сосредоточенными, дисциплинированными, у них появляется цель в жизни.",
+          rating: 5,
+          date: "2024-01-23"
+        },
+        {
+          author: "Участковый полицейский",
+          comment: "В районах с подобными спортивными программами мы наблюдаем значительное снижение подростковой преступности. Это инвестиция не только в спорт, но и в безопасность общества.",
+          rating: 4,
+          date: "2023-12-10"
+        }
+      ]
+    },
+    impactMetrics: {
+      "2000": "Спортивное оборудование для одного вида спорта",
+      "5000": "Годовая программа наставничества для 3 подростков",
+      "10000": "Ремонт и оборудование одного спортивного зала"
+    },
+    documentationLinks: [
+      "https://example.com/sports-mentorship-outcomes",
+      "https://example.com/youth-development-methodology",
+      "https://example.com/crime-reduction-statistics"
     ]
   }
 ];
