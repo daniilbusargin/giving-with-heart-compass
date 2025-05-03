@@ -17,15 +17,15 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
 
   const getRecommendationReason = () => {
     if (campaign.urgency === 'high') {
-      return `Urgent need in ${campaign.category.join(', ')}`;
+      return `Срочная необходимость в категории ${campaign.category.join(', ')}`;
     }
     if (campaign.supportLevel === 'rare') {
-      return "Under-supported cause that needs attention";
+      return "Редко поддерживаемый проект, которому нужно внимание";
     }
     if (campaign.transparency === 'complete') {
-      return "Highly transparent with complete documentation";
+      return "Высокая прозрачность с полной документацией";
     }
-    return `Matching your interest in ${campaign.category.join(', ')}`;
+    return `Соответствует вашему интересу в категории ${campaign.category.join(', ')}`;
   };
 
   const formatCurrency = (amount: number) => {
@@ -46,12 +46,12 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
         />
         <div className="absolute top-2 right-2 flex gap-2">
           <Badge variant="secondary" className="bg-white/90 text-gray-800">
-            {campaign.type === 'fund' ? 'Fund' : 'Campaign'}
+            {campaign.type === 'fund' ? 'Фонд' : 'Кампания'}
           </Badge>
           
           {campaign.urgency === 'high' && (
             <span className="urgency-badge">
-              Urgent
+              Срочно
             </span>
           )}
         </div>
@@ -66,7 +66,7 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
 
         <div className="mb-3">
           <div className="flex justify-between text-sm mb-1">
-            <span className="font-medium">Progress</span>
+            <span className="font-medium">Прогресс</span>
             <span>{progressPercentage}%</span>
           </div>
           <div className="progress-bar">
@@ -77,39 +77,39 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
           </div>
           <div className="flex justify-between text-sm mt-1">
             <span>{formatCurrency(campaign.raisedAmount)}</span>
-            <span>of {formatCurrency(campaign.goalAmount)}</span>
+            <span>из {formatCurrency(campaign.goalAmount)}</span>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-3">
           {campaign.verification && (
             <span className="verification-badge">
-              ✓ Verified
+              ✓ Проверено
             </span>
           )}
           
           {campaign.transparency === 'complete' && (
             <span className="trust-badge">
-              Complete transparency
+              Полная прозрачность
             </span>
           )}
           
           {campaign.reviews.count > 0 && (
             <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-              ★ {campaign.reviews.averageRating} ({campaign.reviews.count} reviews)
+              ★ {campaign.reviews.averageRating} ({campaign.reviews.count} отзывов)
             </span>
           )}
         </div>
 
         {donationAmount && campaign.impactMetrics[donationAmount] && (
           <div className="mb-3 text-sm bg-donation-soft-green/30 p-2 rounded">
-            <span className="font-medium">Impact of ₽{donationAmount}:</span> {campaign.impactMetrics[donationAmount]}
+            <span className="font-medium">Влияние пожертвования ₽{donationAmount}:</span> {campaign.impactMetrics[donationAmount]}
           </div>
         )}
 
         <div className="border-t pt-3 mt-3">
           <p className="text-xs text-gray-500 mb-3">
-            <span className="font-medium">Why we recommend this:</span> {getRecommendationReason()}
+            <span className="font-medium">Почему мы рекомендуем:</span> {getRecommendationReason()}
           </p>
           
           <div className="flex justify-between gap-2">
@@ -120,7 +120,7 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
               asChild
             >
               <Link to={`/campaign/${campaign.id}`}>
-                More details
+                Подробнее
               </Link>
             </Button>
             
@@ -128,7 +128,7 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
               size="sm"
               className="bg-donation-purple hover:bg-donation-dark-purple"
             >
-              Donate now
+              Пожертвовать сейчас
             </Button>
           </div>
         </div>

@@ -14,27 +14,27 @@ const Campaign = () => {
   
   useEffect(() => {
     if (!campaign && id) {
-      // If campaign doesn't exist, redirect to home page
+      // Если кампания не существует, перенаправляем на главную страницу
       navigate('/', { replace: true });
     }
   }, [campaign, id, navigate]);
   
   if (!campaign) {
-    return null; // Will redirect via useEffect
+    return null; // Перенаправление произойдет через useEffect
   }
   
-  // Generate recommendation reason based on campaign properties
+  // Генерируем причину рекомендации на основе свойств кампании
   const getRecommendationReason = () => {
     if (campaign.urgency === 'high') {
-      return `Recommended because of high urgency in the ${campaign.category.join(', ')} category`;
+      return `Рекомендуется из-за высокой срочности в категории ${campaign.category.join(', ')}`;
     }
     if (campaign.supportLevel === 'rare') {
-      return "Recommended because this is an under-supported cause that needs more attention";
+      return "Рекомендуется из-за недостаточной поддержки, нуждается в большем внимании";
     }
     if (campaign.transparency === 'complete') {
-      return "Recommended because of complete transparency in operations and financial reporting";
+      return "Рекомендуется из-за полной прозрачности в операциях и финансовой отчетности";
     }
-    return `Recommended because it matches interest in ${campaign.category.join(', ')}`;
+    return `Рекомендуется, так как соответствует интересу в категории ${campaign.category.join(', ')}`;
   };
 
   return (

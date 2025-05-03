@@ -32,18 +32,18 @@ interface RecommendationFiltersProps {
 }
 
 const categoryOptions = [
-  { value: 'children', label: 'Children' },
-  { value: 'health', label: 'Health' },
-  { value: 'animals', label: 'Animals' },
-  { value: 'education', label: 'Education' },
-  { value: 'water', label: 'Water' },
-  { value: 'local aid', label: 'Local Aid' },
-  { value: 'sustainability', label: 'Sustainability' },
-  { value: 'emergency', label: 'Emergency' },
-  { value: 'youth', label: 'Youth' },
-  { value: 'mental health', label: 'Mental Health' },
-  { value: 'technology', label: 'Technology' },
-  { value: 'community', label: 'Community' },
+  { value: 'children', label: 'Дети' },
+  { value: 'health', label: 'Здоровье' },
+  { value: 'animals', label: 'Животные' },
+  { value: 'education', label: 'Образование' },
+  { value: 'water', label: 'Вода' },
+  { value: 'local aid', label: 'Местная помощь' },
+  { value: 'sustainability', label: 'Экологичность' },
+  { value: 'emergency', label: 'Экстренная помощь' },
+  { value: 'youth', label: 'Молодежь' },
+  { value: 'mental health', label: 'Психическое здоровье' },
+  { value: 'technology', label: 'Технологии' },
+  { value: 'community', label: 'Сообщество' },
 ];
 
 const RecommendationFilters = ({ onFilterChange }: RecommendationFiltersProps) => {
@@ -77,7 +77,8 @@ const RecommendationFilters = ({ onFilterChange }: RecommendationFiltersProps) =
   const handleModeChange = (mode: 'quick' | 'thoughtful') => {
     setRecommendationMode(mode);
     if (mode === 'quick') {
-      const quickFilters = {
+      // При выборе "быстрого выбора" устанавливаем определенные фильтры
+      const quickFilters: FilterOptions = {
         ...filters,
         urgency: 'high',
         transparency: 'detailed'
@@ -95,16 +96,16 @@ const RecommendationFilters = ({ onFilterChange }: RecommendationFiltersProps) =
         onValueChange={(value) => handleModeChange(value as 'quick' | 'thoughtful')}
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-medium">How would you like to choose?</h2>
+          <h2 className="text-lg font-medium">Как бы вы хотели выбрать?</h2>
           <TabsList>
-            <TabsTrigger value="quick">Quick choice</TabsTrigger>
-            <TabsTrigger value="thoughtful">Thoughtful recommendation</TabsTrigger>
+            <TabsTrigger value="quick">Быстрый выбор</TabsTrigger>
+            <TabsTrigger value="thoughtful">Продуманная рекомендация</TabsTrigger>
           </TabsList>
         </div>
         
         <TabsContent value="quick" className="space-y-4">
           <div className="text-sm text-muted-foreground">
-            We'll show you urgent needs with high transparency ratings.
+            Мы покажем вам срочные нужды с высоким рейтингом прозрачности.
           </div>
         </TabsContent>
         
@@ -112,101 +113,101 @@ const RecommendationFilters = ({ onFilterChange }: RecommendationFiltersProps) =
           <Accordion type="single" collapsible defaultValue="filters" className="w-full">
             <AccordionItem value="filters">
               <AccordionTrigger className="text-md font-medium">
-                Adjust filters
+                Настроить фильтры
               </AccordionTrigger>
               <AccordionContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Type</label>
+                    <label className="text-sm font-medium">Тип</label>
                     <Select 
                       onValueChange={(value) => handleFilterChange('type', value)}
                       defaultValue="all"
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select type" />
+                        <SelectValue placeholder="Выберите тип" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="all">All types</SelectItem>
-                        <SelectItem value="fund">Fund</SelectItem>
-                        <SelectItem value="campaign">Campaign</SelectItem>
+                        <SelectItem value="all">Все типы</SelectItem>
+                        <SelectItem value="fund">Фонд</SelectItem>
+                        <SelectItem value="campaign">Кампания</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Urgency</label>
+                    <label className="text-sm font-medium">Срочность</label>
                     <Select 
-                      onValueChange={(value) => handleFilterChange('urgency', value)}
+                      onValueChange={(value) => handleFilterChange('urgency', value as 'low' | 'medium' | 'high' | 'any')}
                       defaultValue="any"
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select urgency" />
+                        <SelectValue placeholder="Выберите срочность" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="any">Any urgency</SelectItem>
-                        <SelectItem value="high">High urgency</SelectItem>
-                        <SelectItem value="medium">Medium urgency</SelectItem>
-                        <SelectItem value="low">Low urgency</SelectItem>
+                        <SelectItem value="any">Любая срочность</SelectItem>
+                        <SelectItem value="high">Высокая срочность</SelectItem>
+                        <SelectItem value="medium">Средняя срочность</SelectItem>
+                        <SelectItem value="low">Низкая срочность</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Transparency</label>
+                    <label className="text-sm font-medium">Прозрачность</label>
                     <Select 
-                      onValueChange={(value) => handleFilterChange('transparency', value)}
+                      onValueChange={(value) => handleFilterChange('transparency', value as 'basic' | 'detailed' | 'complete' | 'any')}
                       defaultValue="any"
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select transparency" />
+                        <SelectValue placeholder="Выберите прозрачность" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="any">Any transparency</SelectItem>
-                        <SelectItem value="complete">Complete (detailed reports)</SelectItem>
-                        <SelectItem value="detailed">Detailed</SelectItem>
-                        <SelectItem value="basic">Basic</SelectItem>
+                        <SelectItem value="any">Любая прозрачность</SelectItem>
+                        <SelectItem value="complete">Полная (детальные отчеты)</SelectItem>
+                        <SelectItem value="detailed">Детальная</SelectItem>
+                        <SelectItem value="basic">Базовая</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Support Level</label>
+                    <label className="text-sm font-medium">Уровень поддержки</label>
                     <Select 
-                      onValueChange={(value) => handleFilterChange('supportLevel', value)}
+                      onValueChange={(value) => handleFilterChange('supportLevel', value as 'rare' | 'moderate' | 'popular' | 'any')}
                       defaultValue="any"
                     >
                       <SelectTrigger>
-                        <SelectValue placeholder="Select support level" />
+                        <SelectValue placeholder="Выберите уровень поддержки" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="any">Any support level</SelectItem>
-                        <SelectItem value="rare">Rarely supported</SelectItem>
-                        <SelectItem value="moderate">Moderately supported</SelectItem>
-                        <SelectItem value="popular">Frequently supported</SelectItem>
+                        <SelectItem value="any">Любой уровень поддержки</SelectItem>
+                        <SelectItem value="rare">Редко поддерживаемые</SelectItem>
+                        <SelectItem value="moderate">Умеренно поддерживаемые</SelectItem>
+                        <SelectItem value="popular">Часто поддерживаемые</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-sm font-medium">Donation Amount (optional)</label>
+                    <label className="text-sm font-medium">Сумма пожертвования (необязательно)</label>
                     <div className="relative">
                       <span className="absolute left-2.5 top-1/2 -translate-y-1/2">₽</span>
                       <Input 
                         type="text"
-                        placeholder="Amount"
+                        placeholder="Сумма"
                         className="pl-7"
                         value={filters.donationAmount}
                         onChange={(e) => handleFilterChange('donationAmount', e.target.value)}
                       />
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Enter an amount to see where it would be most impactful
+                      Введите сумму, чтобы увидеть, где она будет наиболее эффективна
                     </p>
                   </div>
                 </div>
                 
                 <div className="mt-4">
-                  <label className="text-sm font-medium mb-2 block">Cause Categories</label>
+                  <label className="text-sm font-medium mb-2 block">Категории</label>
                   <div className="flex flex-wrap gap-2">
                     {categoryOptions.map((category) => (
                       <Badge

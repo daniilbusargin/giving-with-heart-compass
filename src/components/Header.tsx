@@ -32,14 +32,14 @@ const Header = () => {
             size="sm"
             className="text-gray-600"
           >
-            Sign in
+            Войти
           </Button>
         )}
 
         <Button 
           className="bg-donation-purple hover:bg-donation-dark-purple text-white"
         >
-          Donate
+          Пожертвовать
         </Button>
       </div>
     </header>

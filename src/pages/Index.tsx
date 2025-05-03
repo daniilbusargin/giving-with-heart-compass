@@ -43,16 +43,16 @@ const Index = () => {
       <Header />
       
       <main className="flex-1 container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-2">Donation Recommendations</h1>
+        <h1 className="text-3xl font-bold text-center mb-2">Рекомендации по пожертвованиям</h1>
         <p className="text-center text-gray-600 mb-8">
-          Find causes that align with your values and make a meaningful impact
+          Найдите проекты, которые соответствуют вашим ценностям, и сделайте значимый вклад
         </p>
         
         <RecommendationFilters onFilterChange={handleFilterChange} />
         
         <div className="mb-4 flex justify-between items-center">
           <h2 className="text-xl font-semibold">
-            {showUnderSupported ? 'Under-supported Campaigns & Funds' : 'Recommended for You'}
+            {showUnderSupported ? 'Недостаточно поддерживаемые кампании и фонды' : 'Рекомендовано для вас'}
           </h2>
           
           <Button 
@@ -63,8 +63,8 @@ const Index = () => {
             }`}
           >
             {showUnderSupported 
-              ? 'Show all recommendations' 
-              : 'See under-supported campaigns'
+              ? 'Показать все рекомендации' 
+              : 'Показать редко поддерживаемые кампании'
             }
           </Button>
         </div>
@@ -82,7 +82,7 @@ const Index = () => {
         ) : (
           <div className="text-center py-12">
             <p className="text-lg text-gray-600">
-              No matching campaigns found. Try adjusting your filters.
+              Подходящих кампаний не найдено. Попробуйте изменить фильтры.
             </p>
             <Button 
               className="mt-4 bg-donation-purple hover:bg-donation-dark-purple"
@@ -95,7 +95,7 @@ const Index = () => {
                 donationAmount: '',
               })}
             >
-              Reset filters
+              Сбросить фильтры
             </Button>
           </div>
         )}

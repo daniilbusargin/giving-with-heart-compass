@@ -9,51 +9,51 @@ const Footer = () => {
           <div className="space-y-3">
             <h3 className="text-lg font-semibold text-donation-purple">Heart Compass</h3>
             <p className="text-sm text-gray-600">
-              A human-centered donation recommendation platform designed to help you discover 
-              and support causes that align with your values.
+              Платформа рекомендаций по пожертвованиям, ориентированная на человека, 
+              помогающая вам находить и поддерживать дела, соответствующие вашим ценностям.
             </p>
           </div>
 
           <div className="space-y-3">
-            <h3 className="font-medium">About Us</h3>
+            <h3 className="font-medium">О нас</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/about" className="text-sm text-gray-600 hover:text-donation-purple transition-colors">
-                  Our Mission
+                  Наша миссия
                 </Link>
               </li>
               <li>
                 <Link to="/how-it-works" className="text-sm text-gray-600 hover:text-donation-purple transition-colors">
-                  How Our Recommendations Work
+                  Как работают наши рекомендации
                 </Link>
               </li>
               <li>
                 <Link to="/transparency" className="text-sm text-gray-600 hover:text-donation-purple transition-colors">
-                  Transparency Policy
+                  Политика прозрачности
                 </Link>
               </li>
               <li>
                 <Link to="/terms" className="text-sm text-gray-600 hover:text-donation-purple transition-colors">
-                  Terms of Service
+                  Условия использования
                 </Link>
               </li>
             </ul>
           </div>
 
           <div className="space-y-3">
-            <h3 className="font-medium">Contact</h3>
+            <h3 className="font-medium">Контакты</h3>
             <ul className="space-y-2">
               <li className="text-sm text-gray-600">
                 Email: info@heartcompass.org
               </li>
               <li>
                 <Link to="/contact" className="text-sm text-gray-600 hover:text-donation-purple transition-colors">
-                  Contact Form
+                  Форма контакта
                 </Link>
               </li>
               <li>
                 <Link to="/faq" className="text-sm text-gray-600 hover:text-donation-purple transition-colors">
-                  Frequently Asked Questions
+                  Часто задаваемые вопросы
                 </Link>
               </li>
             </ul>
@@ -62,14 +62,14 @@ const Footer = () => {
 
         <div className="border-t mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-gray-500 mb-4 md:mb-0">
-            © {new Date().getFullYear()} Heart Compass. All rights reserved.
+            © {new Date().getFullYear()} Heart Compass. Все права защищены.
           </p>
           <div className="flex space-x-4">
             <Link to="/privacy" className="text-xs text-gray-500 hover:text-gray-700">
-              Privacy Policy
+              Политика конфиденциальности
             </Link>
             <Link to="/cookie-policy" className="text-xs text-gray-500 hover:text-gray-700">
-              Cookie Policy
+              Политика использования файлов cookie
             </Link>
           </div>
         </div>
