@@ -26,22 +26,22 @@ const Campaign = () => {
   // Generate recommendation reason based on campaign properties
   const getRecommendationReason = () => {
     if (campaign.urgency === 'high') {
-      return `This is an urgent need related to ${campaign.category.join(', ')}`;
+      return `Recommended because of high urgency in the ${campaign.category.join(', ')} category`;
     }
     if (campaign.supportLevel === 'rare') {
-      return "This is an under-supported cause that needs more attention";
+      return "Recommended because this is an under-supported cause that needs more attention";
     }
     if (campaign.transparency === 'complete') {
-      return "This organization provides complete transparency in their operations and financial reporting";
+      return "Recommended because of complete transparency in operations and financial reporting";
     }
-    return `This matches your interest in ${campaign.category.join(', ')}`;
+    return `Recommended because it matches interest in ${campaign.category.join(', ')}`;
   };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
       
-      <main className="flex-1 container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-4 py-6">
         <CampaignDetails 
           campaign={campaign}
           recommendationReason={getRecommendationReason()}

@@ -3,6 +3,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Progress } from "@/components/ui/progress";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -10,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Clock, Check, ChevronDown, ChevronUp, Info, ArrowLeft, Star } from "lucide-react";
 import type { Campaign } from "@/lib/donationData";
 import { toast } from "sonner";
 
@@ -21,13 +24,17 @@ interface CampaignDetailsProps {
 
 const CampaignDetails = ({ campaign, recommendationReason }: CampaignDetailsProps) => {
   const [donationAmount, setDonationAmount] = useState("");
-  const [showDocuments, setShowDocuments] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [isMonthly, setIsMonthly] = useState(false);
   const navigate = useNavigate();
 
   const progressPercentage = Math.min(
     Math.round((campaign.raisedAmount / campaign.goalAmount) * 100),
     100
   );
+  
+  // Calculate days left (just for demonstration)
+  const daysLeft = campaign.urgency === 'high' ? 7 : (campaign.urgency === 'medium' ? 14 : 30);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('ru-RU', { 
@@ -44,248 +51,231 @@ const CampaignDetails = ({ campaign, recommendationReason }: CampaignDetailsProp
     }
 
     // Here we would integrate with a payment processor
-    toast.success(`Thank you for your donation of ₽${donationAmount}!`);
+    toast.success(`Thank you for your ${isMonthly ? 'monthly' : ''} donation of ₽${donationAmount}!`);
     // Reset and navigate home after success
     setTimeout(() => {
       navigate("/");
     }, 2000);
   };
 
+  // Generate random donor count for the UI
+  const donorCount = Math.floor(Math.random() * 200) + 50;
+
   return (
     <div className="max-w-4xl mx-auto bg-white shadow-sm rounded-lg overflow-hidden animate-fade-in">
+      {/* Hero Image with Overlay */}
       <div className="relative">
         <img
           src={campaign.imageUrl}
           alt={campaign.title}
           className="w-full h-64 object-cover"
         />
-        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-white">{campaign.title}</h1>
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+        
+        {/* Back button */}
+        <Button 
+          variant="ghost" 
+          size="sm"
+          className="absolute top-4 left-4 text-white bg-black/30 hover:bg-black/40"
+          onClick={() => navigate('/')}
+        >
+          <ArrowLeft className="mr-1 h-4 w-4" />
+          Back
+        </Button>
       </div>
 
       <div className="p-6">
-        {/* Progress section */}
+        {/* Header Section */}
         <div className="mb-6">
-          <div className="flex justify-between text-sm mb-1">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">{campaign.title}</h1>
+          
+          <div className="flex flex-wrap gap-2 mb-3">
+            {campaign.verification && (
+              <span className="verification-badge">
+                <Check className="h-3 w-3" /> Verified
+              </span>
+            )}
+            
+            <Badge className={`
+              ${campaign.urgency === 'high' ? 'bg-red-100 text-red-800' : 
+                campaign.urgency === 'medium' ? 'bg-yellow-100 text-yellow-800' : 
+                'bg-green-100 text-green-800'}
+            `}>
+              {campaign.urgency === 'high' ? 'Urgent' : 
+               campaign.urgency === 'medium' ? 'Needed' : 'Ongoing'}
+            </Badge>
+            
+            <Badge variant="outline" className="bg-gray-50">
+              {campaign.category.join(', ')}
+            </Badge>
+          </div>
+        </div>
+
+        {/* Progress Section */}
+        <div className="bg-gray-50 rounded-lg p-4 mb-6">
+          <div className="flex justify-between text-sm mb-2">
             <span className="font-medium">Progress</span>
             <span>{progressPercentage}%</span>
           </div>
-          <div className="progress-bar">
-            <div 
-              className="progress-value" 
-              style={{ width: `${progressPercentage}%` }}
-            ></div>
-          </div>
-          <div className="flex justify-between text-sm mt-1">
-            <span>{formatCurrency(campaign.raisedAmount)}</span>
-            <span>of {formatCurrency(campaign.goalAmount)}</span>
+          
+          <Progress value={progressPercentage} className="h-3 mb-2" />
+          
+          <div className="flex justify-between items-center">
+            <div className="text-sm">
+              <span className="font-medium">{formatCurrency(campaign.raisedAmount)}</span>
+              <span className="text-gray-500"> of {formatCurrency(campaign.goalAmount)}</span>
+            </div>
+            
+            {campaign.urgency === 'high' && (
+              <div className="flex items-center text-xs text-red-600 font-medium">
+                <Clock className="h-3 w-3 mr-1" />
+                Only {daysLeft} days left
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Trust indicators */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {campaign.verification && (
-            <span className="verification-badge">
-              ✓ Verified
-            </span>
-          )}
-          
-          {campaign.transparency === 'complete' && (
-            <span className="trust-badge">
-              Complete transparency
-            </span>
-          )}
-          
-          {campaign.reviews.count > 0 && (
-            <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-              ★ {campaign.reviews.averageRating} ({campaign.reviews.count} reviews)
-            </span>
-          )}
-          
-          <span className="text-xs bg-gray-100 px-2 py-1 rounded capitalize">
-            {campaign.urgency} urgency
-          </span>
-        </div>
-
-        {/* Why you're seeing this */}
+        
+        {/* Recommendation Reason */}
         {recommendationReason && (
           <div className="bg-donation-soft-blue/30 p-3 rounded-md mb-6">
-            <h3 className="text-sm font-medium mb-1">Why you're seeing this</h3>
+            <h3 className="text-sm font-medium mb-1">Why we recommend this</h3>
             <p className="text-sm text-gray-600">{recommendationReason}</p>
           </div>
         )}
 
-        {/* Impact section */}
+        {/* Impact Section */}
         <div className="mb-6">
           <h2 className="text-lg font-semibold mb-3">Your Impact</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {Object.entries(campaign.impactMetrics).map(([amount, impact]) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {Object.entries(campaign.impactMetrics).slice(0, 2).map(([amount, impact]) => (
               <div 
                 key={amount} 
-                className="border rounded-md p-3 text-sm hover:border-donation-purple/50 hover:bg-donation-soft-blue/10 transition-colors cursor-pointer"
+                className="border rounded-md p-4 text-sm hover:border-donation-purple/50 hover:bg-donation-soft-blue/10 transition-colors cursor-pointer"
                 onClick={() => setDonationAmount(amount)}
               >
-                <span className="font-medium text-donation-dark-purple">₽{amount}:</span> {impact}
+                <span className="block text-donation-dark-purple font-medium mb-1">₽{amount}</span>
+                <span className="text-gray-600">{impact}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Main description */}
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold mb-3">About This {campaign.type === 'fund' ? 'Fund' : 'Campaign'}</h2>
-          <p className="text-gray-600">{campaign.fullDescription}</p>
-        </div>
-
-        {/* Documentation & transparency */}
+        {/* Trust & Transparency */}
         <div className="mb-6">
           <div className="flex justify-between items-center mb-3">
-            <h2 className="text-lg font-semibold">Documentation & Transparency</h2>
-            
-            <Button 
-              variant="ghost" 
-              onClick={() => setShowDocuments(!showDocuments)}
-              size="sm"
-              className="text-donation-purple"
-            >
-              {showDocuments ? "Hide documents" : "View documents"}
-            </Button>
+            <h2 className="text-lg font-semibold">Trust & Transparency</h2>
           </div>
-
-          {showDocuments && (
-            <div className="border rounded-md p-4 space-y-3">
-              <p className="text-sm text-gray-600">
-                We believe in full transparency. Below are documents verifying this {campaign.type} 
-                and showing how funds are used:
-              </p>
-              
-              <ul className="space-y-2">
-                {campaign.documentationLinks.map((link, index) => (
-                  <li key={index}>
-                    <a 
-                      href={link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-sm text-donation-purple hover:underline flex items-center"
-                    >
-                      Document {index + 1}: {link.split('/').pop()}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-
-        {/* Reviews section */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold mb-3">Reviews ({campaign.reviews.count})</h2>
           
-          {campaign.reviews.comments.length > 0 ? (
-            <div className="space-y-4">
-              {campaign.reviews.comments.map((review, index) => (
-                <div key={index} className="border rounded-md p-4">
-                  <div className="flex justify-between mb-2">
-                    <span className="font-medium">{review.author}</span>
-                    <span className="text-sm text-gray-500">{review.date}</span>
-                  </div>
-                  <div className="flex items-center mb-2">
-                    <span className="text-yellow-500">{"★".repeat(review.rating)}</span>
-                    <span className="text-gray-300">{review.rating < 5 ? "★".repeat(5 - review.rating) : ""}</span>
-                  </div>
-                  <p className="text-gray-600 text-sm">{review.comment}</p>
-                </div>
-              ))}
-              
-              {campaign.reviews.count > campaign.reviews.comments.length && (
-                <Button 
-                  variant="outline" 
-                  className="w-full text-sm"
-                >
-                  View all {campaign.reviews.count} reviews
-                </Button>
-              )}
+          {/* Reviews summary */}
+          <div className="flex items-center mb-4">
+            <div className="flex items-center">
+              <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+              <span className="ml-1 font-medium">{campaign.reviews.averageRating}</span>
             </div>
-          ) : (
-            <p className="text-gray-500 text-sm">No reviews yet.</p>
+            <span className="mx-2 text-gray-400">•</span>
+            <span className="text-sm text-gray-600">{campaign.reviews.count} reviews</span>
+          </div>
+          
+          {/* How funds will be used */}
+          <div className="mb-4">
+            <h3 className="text-sm font-medium mb-2">How funds will be used</h3>
+            <ul className="grid grid-cols-2 gap-2 text-sm">
+              {campaign.category.map((category, index) => (
+                <li key={index} className="flex items-center">
+                  <span className="bg-donation-soft-blue/30 p-1.5 rounded-full mr-2">
+                    <Info className="h-3 w-3 text-blue-600" />
+                  </span>
+                  <span className="capitalize">{category}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          {/* Testimonial */}
+          {campaign.reviews.comments.length > 0 && (
+            <div className="border-l-4 border-donation-purple/30 pl-3 mb-4 italic text-sm text-gray-600">
+              "{campaign.reviews.comments[0].comment.substring(0, 120)}..."
+              <div className="mt-1 font-medium not-italic">— {campaign.reviews.comments[0].author}</div>
+            </div>
+          )}
+          
+          {/* Show more details toggle */}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowDetails(!showDetails)}
+            className="w-full text-sm flex items-center justify-center"
+          >
+            {showDetails ? "Show less" : "Show more details"}
+            {showDetails ? <ChevronUp className="ml-1 h-4 w-4" /> : <ChevronDown className="ml-1 h-4 w-4" />}
+          </Button>
+          
+          {/* Extended details */}
+          {showDetails && (
+            <div className="mt-4 space-y-4 text-sm animate-fade-in">
+              <div>
+                <h3 className="font-medium mb-2">Organization Description</h3>
+                <p className="text-gray-600">{campaign.fullDescription}</p>
+              </div>
+              
+              <div>
+                <h3 className="font-medium mb-2">Documentation & Reports</h3>
+                <ul className="space-y-2">
+                  {campaign.documentationLinks.map((link, index) => (
+                    <li key={index}>
+                      <a 
+                        href={link} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-donation-purple hover:underline flex items-center"
+                      >
+                        Document {index + 1}: {link.split('/').pop()}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           )}
         </div>
 
-        {/* Donation form */}
-        <div className="border-t pt-6">
-          <h2 className="text-lg font-semibold mb-4">Make a Donation</h2>
-
-          <Tabs defaultValue="oneTime" className="w-full mb-4">
-            <TabsList className="w-full">
-              <TabsTrigger value="oneTime" className="flex-1">One-time donation</TabsTrigger>
-              <TabsTrigger value="monthly" className="flex-1">Monthly support</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="oneTime" className="space-y-4 pt-4">
-              <div className="grid grid-cols-4 gap-3">
-                {Object.keys(campaign.impactMetrics).map((amount) => (
-                  <Button 
-                    key={amount}
-                    variant={donationAmount === amount ? "default" : "outline"}
-                    className={donationAmount === amount ? "bg-donation-purple hover:bg-donation-dark-purple" : ""}
-                    onClick={() => setDonationAmount(amount)}
-                  >
-                    ₽{amount}
-                  </Button>
-                ))}
-              </div>
-              
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₽</span>
-                <Input 
-                  type="text"
-                  placeholder="Custom amount"
-                  className="pl-8"
-                  value={donationAmount}
-                  onChange={(e) => setDonationAmount(e.target.value)}
-                />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="monthly" className="pt-4">
-              <p className="text-sm text-gray-600 mb-4">
-                Monthly donations provide consistent support and help with long-term planning.
-              </p>
-              
-              <div className="grid grid-cols-4 gap-3">
-                {['100', '300', '500', '1000'].map((amount) => (
-                  <Button 
-                    key={amount}
-                    variant={donationAmount === amount ? "default" : "outline"}
-                    className={donationAmount === amount ? "bg-donation-purple hover:bg-donation-dark-purple" : ""}
-                    onClick={() => setDonationAmount(amount)}
-                  >
-                    ₽{amount}/mo
-                  </Button>
-                ))}
-              </div>
-              
-              <div className="relative mt-3">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₽</span>
-                <Input 
-                  type="text"
-                  placeholder="Custom amount"
-                  className="pl-8"
-                  value={donationAmount}
-                  onChange={(e) => setDonationAmount(e.target.value)}
-                />
-              </div>
-            </TabsContent>
-          </Tabs>
-
+        {/* Donation Action Block */}
+        <div className="bg-gray-50 p-5 rounded-lg mb-6">
+          <h2 className="text-lg font-semibold mb-4">Make Your Donation</h2>
+          
+          <div className="relative mb-4">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">₽</span>
+            <Input 
+              type="text"
+              placeholder="Enter amount"
+              className="pl-8 text-lg"
+              value={donationAmount}
+              onChange={(e) => setDonationAmount(e.target.value)}
+            />
+          </div>
+          
+          <div className="flex items-center mb-4">
+            <Checkbox 
+              id="monthly"
+              checked={isMonthly}
+              onCheckedChange={() => setIsMonthly(!isMonthly)}
+            />
+            <label 
+              htmlFor="monthly"
+              className="ml-2 text-sm font-medium cursor-pointer"
+            >
+              Make this a monthly donation
+            </label>
+          </div>
+          
           <Dialog>
             <DialogTrigger asChild>
               <Button 
-                className="w-full bg-donation-purple hover:bg-donation-dark-purple text-lg py-6"
+                className="w-full bg-donation-purple hover:bg-donation-dark-purple text-white py-6"
                 disabled={!donationAmount}
+                size="lg"
               >
-                Donate ₽{donationAmount}
+                Donate ₽{donationAmount} {isMonthly ? 'monthly' : ''}
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -315,28 +305,35 @@ const CampaignDetails = ({ campaign, recommendationReason }: CampaignDetailsProp
                   className="w-full bg-donation-purple hover:bg-donation-dark-purple"
                   onClick={handleDonate}
                 >
-                  Donate ₽{donationAmount}
+                  Donate ₽{donationAmount} {isMonthly ? 'monthly' : ''}
                 </Button>
               </div>
             </DialogContent>
           </Dialog>
           
-          <div className="mt-4 flex justify-between">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              asChild
-            >
-              <Link to="/">Find similar causes</Link>
-            </Button>
-            
-            <Button 
-              variant="ghost" 
-              size="sm"
-            >
-              Save to favorites
-            </Button>
-          </div>
+          <p className="text-center text-sm text-gray-500 mt-3">
+            You'll join {donorCount} other donors supporting this cause
+          </p>
+        </div>
+        
+        {/* Navigation & Extras */}
+        <div className="flex flex-col sm:flex-row justify-between gap-3">
+          <Button 
+            variant="outline" 
+            size="sm"
+            asChild
+          >
+            <Link to="/">Back to recommendations</Link>
+          </Button>
+          
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => navigate('/?support=rare')}
+            className="text-donation-purple"
+          >
+            See other under-supported causes
+          </Button>
         </div>
       </div>
     </div>
