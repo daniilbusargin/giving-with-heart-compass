@@ -3,6 +3,15 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import type { Campaign } from "@/lib/donationData";
+import { useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 interface DonationCardProps {
   campaign: Campaign;
@@ -10,6 +19,9 @@ interface DonationCardProps {
 }
 
 const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
+  const [isDonationDialogOpen, setIsDonationDialogOpen] = useState(false);
+  const [amount, setAmount] = useState(donationAmount || "");
+
   const progressPercentage = Math.min(
     Math.round((campaign.raisedAmount / campaign.goalAmount) * 100),
     100
@@ -34,6 +46,20 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
       currency: 'RUB',
       maximumFractionDigits: 0
     }).format(amount);
+  };
+
+  const handleDonateClick = () => {
+    setIsDonationDialogOpen(true);
+  };
+
+  const handleDonationSubmit = () => {
+    if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+      toast.error("Пожалуйста, введите корректную сумму пожертвования");
+      return;
+    }
+    // Here would be the actual donation processing logic
+    toast.success(`Спасибо за ваше пожертвование в размере ${amount}₽ на "${campaign.title}"!`);
+    setIsDonationDialogOpen(false);
   };
 
   return (
@@ -127,12 +153,50 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
             <Button
               size="sm"
               className="bg-donation-purple hover:bg-donation-dark-purple"
+              onClick={handleDonateClick}
             >
               Пожертвовать сейчас
             </Button>
           </div>
         </div>
       </div>
+
+      <Dialog open={isDonationDialogOpen} onOpenChange={setIsDonationDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Пожертвование на "{campaign.title}"</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="donation-amount" className="text-sm font-medium block mb-2">
+                Сумма пожертвования (₽)
+              </label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2">₽</span>
+                <Input
+                  id="donation-amount"
+                  type="text"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                  className="pl-7"
+                  placeholder="Введите сумму"
+                />
+              </div>
+            </div>
+            {amount && !isNaN(Number(amount)) && Number(amount) > 0 && campaign.impactMetrics[amount] && (
+              <div className="text-sm bg-donation-soft-green/30 p-3 rounded">
+                <span className="font-medium">Влияние вашего пожертвования:</span> {campaign.impactMetrics[amount]}
+              </div>
+            )}
+            <Button
+              className="w-full bg-donation-purple hover:bg-donation-dark-purple"
+              onClick={handleDonationSubmit}
+            >
+              Подтвердить пожертвование
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
