@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -119,7 +120,7 @@ const Index = () => {
             <Button 
               className="mt-4 bg-donation-purple hover:bg-donation-dark-purple"
               onClick={() => {
-                const resetFilters = {
+                const resetFilters: FilterOptions = {
                   type: 'all',
                   categories: [],
                   urgency: 'any',
