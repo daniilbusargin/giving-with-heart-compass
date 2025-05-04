@@ -195,21 +195,7 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
             <div className="space-y-4 border p-3 rounded-md bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <label className="text-sm font-medium">Тип сбора</label>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-6 w-6">
-                            <Info className="h-4 w-4 text-muted-foreground" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent className="bg-white">
-                          <p>Выберите, хотите ли вы поддержать конкретный сбор или целевой фонд</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  <label className="text-sm font-medium">Тип сбора</label>
                   <ToggleGroup type="single" variant="outline" className="justify-start">
                     <ToggleGroupItem 
                       value="all" 
@@ -237,81 +223,19 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <label className="text-sm font-medium">Категории</label>
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-6 w-6">
-                              <Info className="h-4 w-4 text-muted-foreground" />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent className="bg-white">
-                            <p>Укажите темы, которые вам важны</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </div>
-                    
-                    <DropdownMenu open={categoryMenuOpen} onOpenChange={setCategoryMenuOpen}>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="outline" size="sm" className="ml-auto">
-                          {filters.categories.length > 0 
-                            ? `Выбрано: ${filters.categories.length}` 
-                            : "Выбрать категории"}
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent className="w-64 bg-white">
-                        <DropdownMenuLabel>Выберите категории</DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        
-                        <DropdownMenuGroup>
-                          <DropdownMenuLabel className="text-xs text-gray-500">По типу благополучателей</DropdownMenuLabel>
-                          {categoryGroups.recipients.map((category) => (
-                            <DropdownMenuItem 
-                              key={category.value} 
-                              className="flex items-center cursor-pointer"
-                              onClick={() => handleCategoryToggle(category.value)}
-                            >
-                              <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
-                              {category.label}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuGroup>
-                        
-                        <DropdownMenuSeparator />
-                        
-                        <DropdownMenuGroup>
-                          <DropdownMenuLabel className="text-xs text-gray-500">По тематике помощи</DropdownMenuLabel>
-                          {categoryGroups.assistance.map((category) => (
-                            <DropdownMenuItem 
-                              key={category.value} 
-                              className="flex items-center cursor-pointer"
-                              onClick={() => handleCategoryToggle(category.value)}
-                            >
-                              <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
-                              {category.label}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuGroup>
-                        
-                        <DropdownMenuSeparator />
-                        
-                        <DropdownMenuGroup>
-                          <DropdownMenuLabel className="text-xs text-gray-500">По направлениям развития</DropdownMenuLabel>
-                          {categoryGroups.development.map((category) => (
-                            <DropdownMenuItem 
-                              key={category.value} 
-                              className="flex items-center cursor-pointer"
-                              onClick={() => handleCategoryToggle(category.value)}
-                            >
-                              <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
-                              {category.label}
-                            </DropdownMenuItem>
-                          ))}
-                        </DropdownMenuGroup>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      onClick={() => setCategoryMenuOpen(true)}
+                      className="w-full justify-between"
+                    >
+                      <span>
+                        {filters.categories.length > 0 
+                          ? `Категории: выбрано ${filters.categories.length}` 
+                          : "Выбрать категории"}
+                      </span>
+                      <Filter className="h-4 w-4 ml-2" />
+                    </Button>
                   </div>
                   
                   <div className="flex flex-wrap gap-2 min-h-[32px]">
@@ -335,6 +259,59 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                       </Badge>
                     )}
                   </div>
+
+                  <DropdownMenu open={categoryMenuOpen} onOpenChange={setCategoryMenuOpen}>
+                    <DropdownMenuContent className="w-64 bg-white">
+                      <DropdownMenuLabel>Выберите категории</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuGroup>
+                        <DropdownMenuLabel className="text-xs text-gray-500">По типу благополучателей</DropdownMenuLabel>
+                        {categoryGroups.recipients.map((category) => (
+                          <DropdownMenuItem 
+                            key={category.value} 
+                            className="flex items-center cursor-pointer"
+                            onClick={() => handleCategoryToggle(category.value)}
+                          >
+                            <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
+                            {category.label}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuGroup>
+                      
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuGroup>
+                        <DropdownMenuLabel className="text-xs text-gray-500">По тематике помощи</DropdownMenuLabel>
+                        {categoryGroups.assistance.map((category) => (
+                          <DropdownMenuItem 
+                            key={category.value} 
+                            className="flex items-center cursor-pointer"
+                            onClick={() => handleCategoryToggle(category.value)}
+                          >
+                            <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
+                            {category.label}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuGroup>
+                      
+                      <DropdownMenuSeparator />
+                      
+                      <DropdownMenuGroup>
+                        <DropdownMenuLabel className="text-xs text-gray-500">По направлениям развития</DropdownMenuLabel>
+                        {categoryGroups.development.map((category) => (
+                          <DropdownMenuItem 
+                            key={category.value} 
+                            className="flex items-center cursor-pointer"
+                            onClick={() => handleCategoryToggle(category.value)}
+                          >
+                            <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
+                            {category.label}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
             </div>
@@ -343,21 +320,7 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
             <div className="space-y-4 border p-3 rounded-md bg-gray-50">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <label className="text-sm font-medium">Срочность</label>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-6 w-6">
-                            <Info className="h-4 w-4 text-muted-foreground" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent className="bg-white">
-                          <p>Высокая — до 3 дней, средняя — 3–7 дней, низкая — больше недели</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  <label className="text-sm font-medium">Срочность</label>
                   <Select 
                     onValueChange={(value) => handleFilterChange('urgency', value as 'low' | 'medium' | 'high' | 'any')}
                     defaultValue={filters.urgency}
@@ -372,24 +335,13 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                       <SelectItem value="low">Низкая срочность</SelectItem>
                     </SelectContent>
                   </Select>
+                  <p className="text-xs text-muted-foreground">
+                    Высокая — до 3 дней, средняя — 3–7 дней, низкая — больше недели
+                  </p>
                 </div>
                 
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <label className="text-sm font-medium">Прозрачность</label>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-6 w-6">
-                            <Info className="h-4 w-4 text-muted-foreground" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent className="bg-white">
-                          <p>Уровень детализации информации о расходовании средств</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  <label className="text-sm font-medium">Прозрачность</label>
                   <Select 
                     onValueChange={(value) => handleFilterChange('transparency', value as 'basic' | 'detailed' | 'complete' | 'any')}
                     defaultValue={filters.transparency}
@@ -407,21 +359,7 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                 </div>
                 
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <label className="text-sm font-medium">Сумма пожертвования</label>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-6 w-6">
-                            <Info className="h-4 w-4 text-muted-foreground" />
-                          </Button>
-                        </TooltipTrigger>
-                        <TooltipContent className="bg-white">
-                          <p>Мы покажем, где ваша сумма будет наиболее полезной</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  </div>
+                  <label className="text-sm font-medium">Сумма пожертвования</label>
                   <div className="relative">
                     <span className="absolute left-2.5 top-1/2 -translate-y-1/2">₽</span>
                     <Input 
@@ -432,6 +370,9 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                       onChange={(e) => handleFilterChange('donationAmount', e.target.value)}
                     />
                   </div>
+                  <p className="text-xs text-muted-foreground">
+                    Мы покажем, где ваша сумма будет наиболее полезной
+                  </p>
                 </div>
               </div>
             </div>
