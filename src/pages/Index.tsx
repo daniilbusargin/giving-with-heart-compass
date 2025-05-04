@@ -14,7 +14,7 @@ const Index = () => {
     categories: [],
     urgency: 'any',
     transparency: 'any',
-    supportLevel: 'any',
+    supportLevel: 'any', // Оставляем для совместимости с API
     donationAmount: '',
   });
   

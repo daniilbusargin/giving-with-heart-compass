@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -37,13 +38,22 @@ import {
   ToggleGroup, 
   ToggleGroupItem 
 } from "@/components/ui/toggle-group";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export interface FilterOptions {
   type: 'fund' | 'campaign' | 'all';
   categories: string[];
   urgency: 'low' | 'medium' | 'high' | 'any';
   transparency: 'basic' | 'detailed' | 'complete' | 'any';
-  supportLevel: 'rare' | 'moderate' | 'popular' | 'any';
+  supportLevel: 'rare' | 'moderate' | 'popular' | 'any'; // Сохраняем для совместимости
   donationAmount: string;
 }
 
@@ -52,31 +62,47 @@ interface RecommendationFiltersProps {
   onRandomSelect?: () => void;
 }
 
+// Категории, сгруппированные по типу
+const categoryGroups = {
+  recipients: [
+    { value: 'children', label: 'Дети' },
+    { value: 'youth', label: 'Молодёжь' },
+    { value: 'elderly', label: 'Пожилые' },
+    { value: 'animals', label: 'Животные' },
+  ],
+  assistance: [
+    { value: 'health', label: 'Здоровье' },
+    { value: 'mental health', label: 'Психическое здоровье' },
+    { value: 'education', label: 'Образование' },
+    { value: 'emergency', label: 'Экстренная помощь' },
+    { value: 'local aid', label: 'Местная помощь' },
+  ],
+  development: [
+    { value: 'technology', label: 'Технологии' },
+    { value: 'sustainability', label: 'Экологичность' },
+    { value: 'community', label: 'Сообщество' },
+    { value: 'water', label: 'Вода' },
+  ]
+};
+
+// Все категории в одном массиве для совместимости
 const categoryOptions = [
-  { value: 'children', label: 'Дети' },
-  { value: 'health', label: 'Здоровье' },
-  { value: 'animals', label: 'Животные' },
-  { value: 'education', label: 'Образование' },
-  { value: 'water', label: 'Вода' },
-  { value: 'local aid', label: 'Местная помощь' },
-  { value: 'sustainability', label: 'Экологичность' },
-  { value: 'emergency', label: 'Экстренная помощь' },
-  { value: 'youth', label: 'Молодежь' },
-  { value: 'mental health', label: 'Психическое здоровье' },
-  { value: 'technology', label: 'Технологии' },
-  { value: 'community', label: 'Сообщество' },
+  ...categoryGroups.recipients,
+  ...categoryGroups.assistance,
+  ...categoryGroups.development
 ];
 
 const RecommendationFilters = ({ onFilterChange, onRandomSelect }: RecommendationFiltersProps) => {
   const [recommendationMode, setRecommendationMode] = useState<'quick' | 'thoughtful'>('thoughtful');
   const [showHowItWorks, setShowHowItWorks] = useState(false);
   const [showCategories, setShowCategories] = useState(false);
+  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     type: 'all',
     categories: [],
     urgency: 'any',
     transparency: 'any',
-    supportLevel: 'any',
+    supportLevel: 'any', // Сохраняем для совместимости
     donationAmount: '',
   });
 
@@ -104,7 +130,8 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
       const quickFilters: FilterOptions = {
         ...filters,
         urgency: 'high',
-        transparency: 'detailed'
+        transparency: 'detailed',
+        supportLevel: 'any' // Сохраняем для совместимости
       };
       setFilters(quickFilters);
       onFilterChange(quickFilters);
@@ -127,13 +154,13 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                   <Info className="h-4 w-4 text-muted-foreground" />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-80 p-4">
+              <PopoverContent className="w-80 p-4 bg-white">
                 <div className="space-y-2">
                   <h3 className="font-medium">Как работают наши рекомендации</h3>
                   <p className="text-sm text-muted-foreground">
-                    Мы учитываем срочность сбора, уровень прозрачности организации, 
-                    текущий уровень поддержки и ваши предпочтения по категориям, 
-                    чтобы предложить вам наиболее подходящие варианты для пожертвования.
+                    Мы учитываем срочность сбора, уровень прозрачности организации
+                    и ваши предпочтения по категориям, чтобы предложить вам наиболее 
+                    подходящие варианты для пожертвования.
                   </p>
                 </div>
               </PopoverContent>
@@ -164,28 +191,25 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
         
         <TabsContent value="thoughtful" className="space-y-4">
           <div className="grid grid-cols-1 gap-4">
-            {/* Группа 1: Тип и категории */}
+            {/* Группа 1: Тип и категории - первая строка */}
             <div className="space-y-4 border p-3 rounded-md bg-gray-50">
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-md font-medium">Тип и категории</h3>
-                  <TooltipProvider>
-                    <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-6 w-6">
-                          <Info className="h-4 w-4 text-muted-foreground" />
-                        </Button>
-                      </TooltipTrigger>
-                      <TooltipContent className="max-w-xs">
-                        <p>Выберите тип сбора и категории, которые вам интересны</p>
-                      </TooltipContent>
-                    </Tooltip>
-                  </TooltipProvider>
-                </div>
-              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Тип сбора</label>
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-medium">Тип сбора</label>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <Info className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-white">
+                          <p>Выберите, хотите ли вы поддержать конкретный сбор или целевой фонд</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
                   <ToggleGroup type="single" variant="outline" className="justify-start">
                     <ToggleGroupItem 
                       value="all" 
@@ -211,77 +235,129 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                   </ToggleGroup>
                 </div>
                 
-                <Collapsible
-                  open={showCategories}
-                  onOpenChange={setShowCategories}
-                  className="space-y-2"
-                >
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">Категории</label>
-                    <CollapsibleTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        {showCategories ? "Скрыть" : "Показать все"}
-                      </Button>
-                    </CollapsibleTrigger>
+                    <div className="flex items-center gap-2">
+                      <label className="text-sm font-medium">Категории</label>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-6 w-6">
+                              <Info className="h-4 w-4 text-muted-foreground" />
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent className="bg-white">
+                            <p>Укажите темы, которые вам важны</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
+                    </div>
+                    
+                    <DropdownMenu open={categoryMenuOpen} onOpenChange={setCategoryMenuOpen}>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="sm" className="ml-auto">
+                          {filters.categories.length > 0 
+                            ? `Выбрано: ${filters.categories.length}` 
+                            : "Выбрать категории"}
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-64 bg-white">
+                        <DropdownMenuLabel>Выберите категории</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        
+                        <DropdownMenuGroup>
+                          <DropdownMenuLabel className="text-xs text-gray-500">По типу благополучателей</DropdownMenuLabel>
+                          {categoryGroups.recipients.map((category) => (
+                            <DropdownMenuItem 
+                              key={category.value} 
+                              className="flex items-center cursor-pointer"
+                              onClick={() => handleCategoryToggle(category.value)}
+                            >
+                              <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
+                              {category.label}
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuGroup>
+                        
+                        <DropdownMenuSeparator />
+                        
+                        <DropdownMenuGroup>
+                          <DropdownMenuLabel className="text-xs text-gray-500">По тематике помощи</DropdownMenuLabel>
+                          {categoryGroups.assistance.map((category) => (
+                            <DropdownMenuItem 
+                              key={category.value} 
+                              className="flex items-center cursor-pointer"
+                              onClick={() => handleCategoryToggle(category.value)}
+                            >
+                              <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
+                              {category.label}
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuGroup>
+                        
+                        <DropdownMenuSeparator />
+                        
+                        <DropdownMenuGroup>
+                          <DropdownMenuLabel className="text-xs text-gray-500">По направлениям развития</DropdownMenuLabel>
+                          {categoryGroups.development.map((category) => (
+                            <DropdownMenuItem 
+                              key={category.value} 
+                              className="flex items-center cursor-pointer"
+                              onClick={() => handleCategoryToggle(category.value)}
+                            >
+                              <div className={`w-4 h-4 mr-2 border rounded ${filters.categories.includes(category.value) ? 'bg-donation-purple border-donation-purple' : 'border-gray-300'}`}></div>
+                              {category.label}
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
-                  <div className="flex flex-wrap gap-2">
-                    {categoryOptions.slice(0, showCategories ? undefined : 6).map((category) => (
-                      <Badge
-                        key={category.value}
-                        variant={filters.categories.includes(category.value) ? "default" : "outline"}
-                        className={`cursor-pointer ${
-                          filters.categories.includes(category.value) 
-                            ? "bg-donation-purple hover:bg-donation-dark-purple" 
-                            : ""
-                        }`}
-                        onClick={() => handleCategoryToggle(category.value)}
-                      >
-                        {category.label}
-                      </Badge>
-                    ))}
-                  </div>
-                  <CollapsibleContent className="space-y-2">
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {categoryOptions.slice(6).map((category) => (
+                  
+                  <div className="flex flex-wrap gap-2 min-h-[32px]">
+                    {filters.categories.slice(0, 3).map((categoryValue) => {
+                      const category = categoryOptions.find(c => c.value === categoryValue);
+                      return category ? (
                         <Badge
                           key={category.value}
-                          variant={filters.categories.includes(category.value) ? "default" : "outline"}
-                          className={`cursor-pointer ${
-                            filters.categories.includes(category.value) 
-                              ? "bg-donation-purple hover:bg-donation-dark-purple" 
-                              : ""
-                          }`}
+                          variant="default"
+                          className="bg-donation-purple hover:bg-donation-dark-purple cursor-pointer"
                           onClick={() => handleCategoryToggle(category.value)}
                         >
-                          {category.label}
+                          {category.label} ×
                         </Badge>
-                      ))}
-                    </div>
-                  </CollapsibleContent>
-                </Collapsible>
+                      ) : null;
+                    })}
+                    
+                    {filters.categories.length > 3 && (
+                      <Badge variant="outline" className="cursor-pointer" onClick={() => setCategoryMenuOpen(true)}>
+                        +{filters.categories.length - 3} ещё
+                      </Badge>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
             
-            {/* Группа 2: Срочность и Сумма */}
+            {/* Группа 2: Срочность, Прозрачность и Сумма - вторая строка */}
             <div className="space-y-4 border p-3 rounded-md bg-gray-50">
-              <div className="flex items-center gap-2">
-                <h3 className="text-md font-medium">Срочность и сумма</h3>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-6 w-6">
-                        <Info className="h-4 w-4 text-muted-foreground" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="max-w-xs">
-                      <p>Выберите срочность сбора и укажите сумму пожертвования</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Срочность</label>
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-medium">Срочность</label>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <Info className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-white">
+                          <p>Высокая — до 3 дней, средняя — 3–7 дней, низкая — больше недели</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
                   <Select 
                     onValueChange={(value) => handleFilterChange('urgency', value as 'low' | 'medium' | 'high' | 'any')}
                     defaultValue={filters.urgency}
@@ -289,20 +365,63 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                     <SelectTrigger>
                       <SelectValue placeholder="Выберите срочность" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white">
                       <SelectItem value="any">Любая срочность</SelectItem>
                       <SelectItem value="high">Высокая срочность</SelectItem>
                       <SelectItem value="medium">Средняя срочность</SelectItem>
                       <SelectItem value="low">Низкая срочность</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Высокая срочность означает срочную потребность в помощи
-                  </p>
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium">Сумма пожертвования</label>
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-medium">Прозрачность</label>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <Info className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-white">
+                          <p>Уровень детализации информации о расходовании средств</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                  <Select 
+                    onValueChange={(value) => handleFilterChange('transparency', value as 'basic' | 'detailed' | 'complete' | 'any')}
+                    defaultValue={filters.transparency}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Выберите прозрачность" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white">
+                      <SelectItem value="any">Любая прозрачность</SelectItem>
+                      <SelectItem value="complete">Полная (детальные отчеты)</SelectItem>
+                      <SelectItem value="detailed">Детальная</SelectItem>
+                      <SelectItem value="basic">Базовая</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-medium">Сумма пожертвования</label>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-6 w-6">
+                            <Info className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                        </TooltipTrigger>
+                        <TooltipContent className="bg-white">
+                          <p>Мы покажем, где ваша сумма будет наиболее полезной</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
                   <div className="relative">
                     <span className="absolute left-2.5 top-1/2 -translate-y-1/2">₽</span>
                     <Input 
@@ -313,71 +432,6 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                       onChange={(e) => handleFilterChange('donationAmount', e.target.value)}
                     />
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    Введите сумму, чтобы увидеть, где она будет наиболее эффективна
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-            {/* Группа 3: Прозрачность и уровень поддержки */}
-            <div className="space-y-4 border p-3 rounded-md bg-gray-50">
-              <div className="flex items-center gap-2">
-                <h3 className="text-md font-medium">Прозрачность и уровень поддержки</h3>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button variant="ghost" size="icon" className="h-6 w-6">
-                        <Info className="h-4 w-4 text-muted-foreground" />
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent className="max-w-xs">
-                      <p>Выберите требуемый уровень прозрачности и степень поддержки кампании</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Прозрачность</label>
-                  <Select 
-                    onValueChange={(value) => handleFilterChange('transparency', value as 'basic' | 'detailed' | 'complete' | 'any')}
-                    defaultValue={filters.transparency}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Выберите прозрачность" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="any">Любая прозрачность</SelectItem>
-                      <SelectItem value="complete">Полная (детальные отчеты)</SelectItem>
-                      <SelectItem value="detailed">Детальная</SelectItem>
-                      <SelectItem value="basic">Базовая</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Определяет уровень детализации информации о расходовании средств
-                  </p>
-                </div>
-                
-                <div className="space-y-2">
-                  <label className="text-sm font-medium">Уровень поддержки</label>
-                  <Select 
-                    onValueChange={(value) => handleFilterChange('supportLevel', value as 'rare' | 'moderate' | 'popular' | 'any')}
-                    defaultValue={filters.supportLevel}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Выберите уровень поддержки" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="any">Любой уровень поддержки</SelectItem>
-                      <SelectItem value="rare">Редко поддерживаемые</SelectItem>
-                      <SelectItem value="moderate">Умеренно поддерживаемые</SelectItem>
-                      <SelectItem value="popular">Часто поддерживаемые</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <p className="text-xs text-muted-foreground">
-                    Показывает, насколько часто другие пользователи поддерживают эту кампанию
-                  </p>
                 </div>
               </div>
             </div>
@@ -392,7 +446,7 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                   categories: [],
                   urgency: 'any',
                   transparency: 'any',
-                  supportLevel: 'any',
+                  supportLevel: 'any', // Сохраняем для совместимости
                   donationAmount: '',
                 };
                 setFilters(resetFilters);
