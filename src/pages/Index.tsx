@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -14,7 +13,7 @@ const Index = () => {
     categories: [],
     urgency: 'any',
     transparency: 'any',
-    supportLevel: 'any', // Оставляем для совместимости с API
+    supportLevel: 'any',
     donationAmount: '',
   });
   
@@ -26,7 +25,7 @@ const Index = () => {
     categories: filterOptions.categories.length > 0 ? filterOptions.categories : undefined,
     urgency: filterOptions.urgency,
     transparency: filterOptions.transparency,
-    supportLevel: showUnderSupported ? 'rare' : filterOptions.supportLevel,
+    supportLevel: showUnderSupported ? 'rare' : 'any',
   });
 
   const handleFilterChange = (filters: FilterOptions) => {

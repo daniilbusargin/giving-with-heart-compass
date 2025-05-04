@@ -52,16 +52,16 @@ const Campaign = () => {
     organization: {
       name: campaignData.organization || "Организация",
       description: campaignData.fullDescription || "Описание организации",
-      yearFounded: campaignData.foundedYear || 2020, // Примерное значение если не указан
+      yearFounded: 2020, // Примерное значение если не указан
       logo: campaignData.imageUrl
     },
     
     // Используем отзывы из reviews
     testimonials: (campaignData.reviews?.comments || []).map(comment => ({
       name: comment.author,
-      role: comment.role || "", // Если role отсутствует, используем пустую строку
+      role: "Донатор", // Используем фиксированное значение
       content: comment.comment,
-      avatar: comment.avatar || "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" // Используем фиксированное изображение
     }))
   };
 

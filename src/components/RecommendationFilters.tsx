@@ -53,7 +53,6 @@ export interface FilterOptions {
   categories: string[];
   urgency: 'low' | 'medium' | 'high' | 'any';
   transparency: 'basic' | 'detailed' | 'complete' | 'any';
-  supportLevel: 'rare' | 'moderate' | 'popular' | 'any'; // Сохраняем для совместимости
   donationAmount: string;
 }
 
@@ -94,15 +93,11 @@ const categoryOptions = [
 
 const RecommendationFilters = ({ onFilterChange, onRandomSelect }: RecommendationFiltersProps) => {
   const [recommendationMode, setRecommendationMode] = useState<'quick' | 'thoughtful'>('thoughtful');
-  const [showHowItWorks, setShowHowItWorks] = useState(false);
-  const [showCategories, setShowCategories] = useState(false);
-  const [categoryMenuOpen, setCategoryMenuOpen] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
     type: 'all',
     categories: [],
     urgency: 'any',
     transparency: 'any',
-    supportLevel: 'any', // Сохраняем для совместимости
     donationAmount: '',
   });
 
@@ -131,11 +126,23 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
         ...filters,
         urgency: 'high',
         transparency: 'detailed',
-        supportLevel: 'any' // Сохраняем для совместимости
       };
       setFilters(quickFilters);
       onFilterChange(quickFilters);
     }
+  };
+
+  // Функция сброса всех фильтров
+  const resetAllFilters = () => {
+    const resetFilters: FilterOptions = {
+      type: 'all',
+      categories: [],
+      urgency: 'any',
+      transparency: 'any',
+      donationAmount: '',
+    };
+    setFilters(resetFilters);
+    onFilterChange(resetFilters);
   };
 
   return (
@@ -200,21 +207,21 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                     <ToggleGroupItem 
                       value="all" 
                       onClick={() => handleFilterChange('type', 'all')}
-                      className={filters.type === 'all' ? "bg-donation-purple text-white" : ""}
+                      className={filters.type === 'all' ? "bg-donation-purple text-white hover:bg-donation-dark-purple" : ""}
                     >
                       Все
                     </ToggleGroupItem>
                     <ToggleGroupItem 
                       value="fund" 
                       onClick={() => handleFilterChange('type', 'fund')}
-                      className={filters.type === 'fund' ? "bg-donation-purple text-white" : ""}
+                      className={filters.type === 'fund' ? "bg-donation-purple text-white hover:bg-donation-dark-purple" : ""}
                     >
                       Фонды
                     </ToggleGroupItem>
                     <ToggleGroupItem 
                       value="campaign" 
                       onClick={() => handleFilterChange('type', 'campaign')}
-                      className={filters.type === 'campaign' ? "bg-donation-purple text-white" : ""}
+                      className={filters.type === 'campaign' ? "bg-donation-purple text-white hover:bg-donation-dark-purple" : ""}
                     >
                       Кампании
                     </ToggleGroupItem>
@@ -222,45 +229,23 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                 </div>
                 
                 <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <Button 
-                      variant="outline" 
-                      size="sm" 
-                      onClick={() => setCategoryMenuOpen(true)}
-                      className="w-full justify-between"
-                    >
-                      <span>
-                        {filters.categories.length > 0 
-                          ? `Категории: выбрано ${filters.categories.length}` 
-                          : "Выбрать категории"}
-                      </span>
-                      <Filter className="h-4 w-4 ml-2" />
-                    </Button>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 min-h-[32px]">
-                    {filters.categories.slice(0, 3).map((categoryValue) => {
-                      const category = categoryOptions.find(c => c.value === categoryValue);
-                      return category ? (
-                        <Badge
-                          key={category.value}
-                          variant="default"
-                          className="bg-donation-purple hover:bg-donation-dark-purple cursor-pointer"
-                          onClick={() => handleCategoryToggle(category.value)}
-                        >
-                          {category.label} ×
-                        </Badge>
-                      ) : null;
-                    })}
+                  <label className="text-sm font-medium">Категории</label>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="w-full justify-between cursor-pointer"
+                      >
+                        <span>
+                          {filters.categories.length > 0 
+                            ? `Выбрано категорий: ${filters.categories.length}` 
+                            : "Выберите категории"}
+                        </span>
+                        <Filter className="h-4 w-4 ml-2" />
+                      </Button>
+                    </DropdownMenuTrigger>
                     
-                    {filters.categories.length > 3 && (
-                      <Badge variant="outline" className="cursor-pointer" onClick={() => setCategoryMenuOpen(true)}>
-                        +{filters.categories.length - 3} ещё
-                      </Badge>
-                    )}
-                  </div>
-
-                  <DropdownMenu open={categoryMenuOpen} onOpenChange={setCategoryMenuOpen}>
                     <DropdownMenuContent className="w-64 bg-white">
                       <DropdownMenuLabel>Выберите категории</DropdownMenuLabel>
                       <DropdownMenuSeparator />
@@ -312,6 +297,28 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                       </DropdownMenuGroup>
                     </DropdownMenuContent>
                   </DropdownMenu>
+                  
+                  <div className="flex flex-wrap gap-2 min-h-[32px]">
+                    {filters.categories.slice(0, 3).map((categoryValue) => {
+                      const category = categoryOptions.find(c => c.value === categoryValue);
+                      return category ? (
+                        <Badge
+                          key={category.value}
+                          variant="default"
+                          className="bg-donation-purple hover:bg-donation-dark-purple cursor-pointer"
+                          onClick={() => handleCategoryToggle(category.value)}
+                        >
+                          {category.label} ×
+                        </Badge>
+                      ) : null;
+                    })}
+                    
+                    {filters.categories.length > 3 && (
+                      <Badge variant="outline" className="cursor-pointer" onClick={() => {}}>
+                        +{filters.categories.length - 3} ещё
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -322,8 +329,8 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Срочность</label>
                   <Select 
+                    value={filters.urgency}
                     onValueChange={(value) => handleFilterChange('urgency', value as 'low' | 'medium' | 'high' | 'any')}
-                    defaultValue={filters.urgency}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Выберите срочность" />
@@ -343,8 +350,8 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                 <div className="space-y-2">
                   <label className="text-sm font-medium">Прозрачность</label>
                   <Select 
+                    value={filters.transparency}
                     onValueChange={(value) => handleFilterChange('transparency', value as 'basic' | 'detailed' | 'complete' | 'any')}
-                    defaultValue={filters.transparency}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Выберите прозрачность" />
@@ -381,18 +388,7 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
           <div className="flex justify-between items-center pt-2">
             <Button 
               variant="outline"
-              onClick={() => {
-                const resetFilters: FilterOptions = {
-                  type: 'all',
-                  categories: [],
-                  urgency: 'any',
-                  transparency: 'any',
-                  supportLevel: 'any', // Сохраняем для совместимости
-                  donationAmount: '',
-                };
-                setFilters(resetFilters);
-                onFilterChange(resetFilters);
-              }}
+              onClick={resetAllFilters}
               className="text-sm"
             >
               Сбросить фильтры
