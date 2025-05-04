@@ -6,11 +6,63 @@ import Footer from '@/components/Footer';
 import CampaignDetails from '@/components/CampaignDetails';
 import { getCampaignById } from '@/lib/donationData';
 
+// Define interface extensions for the Campaign type to include missing properties
+interface UsagePlanItem {
+  title: string;
+  percentage: number;
+  description: string;
+}
+
+interface ImpactInfo {
+  title: string;
+  description: string;
+}
+
+interface UsagePlan {
+  title: string;
+  items: UsagePlanItem[];
+}
+
+interface OrganizationInfo {
+  name: string;
+  description: string;
+  yearFounded: number;
+  logo: string;
+}
+
+interface Testimonial {
+  name: string;
+  role: string;
+  content: string;
+  avatar: string;
+}
+
+// Extend the Campaign type from donationData.ts with the missing properties
+interface ExtendedCampaign {
+  id: string;
+  title: string;
+  description: string;
+  category: string[];
+  type: 'fund' | 'campaign';
+  amountRaised: number;
+  targetAmount: number;
+  daysLeft: number | null;
+  urgency: 'low' | 'medium' | 'high';
+  transparency: 'basic' | 'detailed' | 'complete';
+  supportLevel: 'rare' | 'moderate' | 'popular';
+  image: string;
+  impact: ImpactInfo;
+  usagePlan: UsagePlan;
+  organization: OrganizationInfo;
+  testimonials: Testimonial[];
+}
+
 const Campaign = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   
-  const campaign = id ? getCampaignById(id) : undefined;
+  // Type assertion to ExtendedCampaign
+  const campaign = id ? getCampaignById(id) as unknown as ExtendedCampaign : undefined;
   
   useEffect(() => {
     if (!campaign && id) {

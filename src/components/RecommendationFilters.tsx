@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -23,7 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Info, Filter, Random } from "lucide-react";
+import { Info, Filter, Shuffle } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
@@ -156,7 +155,7 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
                 className="flex items-center gap-2 bg-donation-purple hover:bg-donation-dark-purple"
                 onClick={onRandomSelect}
               >
-                <Random size={16} />
+                <Shuffle size={16} />
                 <span>Случайный добрый выбор</span>
               </Button>
             </div>
@@ -408,7 +407,7 @@ const RecommendationFilters = ({ onFilterChange, onRandomSelect }: Recommendatio
               className="flex items-center gap-2 bg-donation-purple hover:bg-donation-dark-purple"
               onClick={onRandomSelect}
             >
-              <Random size={16} />
+              <Shuffle size={16} />
               <span>Случайный добрый выбор</span>
             </Button>
           </div>

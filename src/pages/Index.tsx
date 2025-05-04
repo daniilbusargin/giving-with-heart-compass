@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -19,7 +18,7 @@ const Index = () => {
   });
   
   const [showUnderSupported, setShowUnderSupported] = useState(false);
-  const [randomSelection, setRandomSelection] = useState<boolean>(false);
+  const [randomSelection, setRandomSelection] = useState(false);
   
   const recommendations = getRecommendation({
     type: filterOptions.type,
