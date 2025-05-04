@@ -85,7 +85,7 @@ const Campaign = () => {
       
       <main className="flex-1 container mx-auto px-4 py-6">
         <CampaignDetails 
-          campaign={campaign as any}
+          campaign={campaign}
           recommendationReason={getRecommendationReason()}
         />
       </main>

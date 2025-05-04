@@ -34,7 +34,7 @@ const Header = () => {
     <header className="w-full py-4 px-6 md:px-8 bg-white shadow-sm flex items-center justify-between">
       <div className="flex items-center">
         <Link to="/" className="flex items-center">
-          <span className="text-xl font-bold text-donation-purple">Компас сердца</span>
+          <span className="text-xl font-bold text-donation-purple">Compassio</span>
         </Link>
       </div>
       

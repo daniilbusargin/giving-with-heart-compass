@@ -7,10 +7,9 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="space-y-3">
-            <h3 className="text-lg font-semibold text-donation-purple">Компас сердца</h3>
+            <h3 className="text-lg font-semibold text-donation-purple">Compassio</h3>
             <p className="text-sm text-gray-600">
-              Платформа рекомендаций по пожертвованиям, ориентированная на человека, 
-              помогающая вам находить и поддерживать дела, соответствующие вашим ценностям.
+              Человеко-ориентированная платформа рекомендаций для пожертвований. Помогаем вам делать осознанный выбор и поддерживать то, что действительно важно.
             </p>
           </div>
 
@@ -44,7 +43,7 @@ const Footer = () => {
             <h3 className="font-medium">Контакты</h3>
             <ul className="space-y-2">
               <li className="text-sm text-gray-600">
-                Email: info@compassserdca.org
+                Email: info@compassio.org
               </li>
               <li>
                 <Link to="/contact" className="text-sm text-gray-600 hover:text-donation-purple transition-colors">
@@ -62,7 +61,7 @@ const Footer = () => {
 
         <div className="border-t mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-gray-500 mb-4 md:mb-0">
-            © {new Date().getFullYear()} Компас сердца. Все права защищены.
+            © {new Date().getFullYear()} Compassio. Все права защищены.
           </p>
           <div className="flex space-x-4">
             <Link to="/privacy" className="text-xs text-gray-500 hover:text-gray-700">
