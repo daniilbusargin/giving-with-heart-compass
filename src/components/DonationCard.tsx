@@ -62,42 +62,88 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
     setIsDonationDialogOpen(false);
   };
 
-  // Get appropriate image based on campaign category and type
+  // Get appropriate image based on campaign content
   const getCampaignImage = () => {
-    // Primary category-based images
-    const categoryImages: Record<string, string> = {
-      'children': 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'youth': 'https://images.unsplash.com/photo-1529333166437-7cea30f76a12?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'elderly': 'https://images.unsplash.com/photo-1581579438747-104c53d7fbc4?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'animals': 'https://images.unsplash.com/photo-1517022812141-23620dba5c23?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'health': 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'education': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'emergency': 'https://images.unsplash.com/photo-1583661577195-0c41d36733ec?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'local': 'https://images.unsplash.com/photo-1621841752127-a28a17fd46a8?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'technology': 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'ecology': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'community': 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-      'water': 'https://images.unsplash.com/photo-1538300342682-cf57afb97271?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
-    };
-    
     // If there's a valid image URL already, use that
     if (campaign.imageUrl && campaign.imageUrl.startsWith('http')) {
       return campaign.imageUrl;
     }
     
-    // Otherwise try to find an image based on category
-    if (campaign.category && campaign.category.length > 0) {
-      for (const category of campaign.category) {
-        const lowerCategory = category.toLowerCase();
-        for (const [key, url] of Object.entries(categoryImages)) {
-          if (lowerCategory.includes(key)) {
-            return url;
-          }
-        }
-      }
+    // Check title and description content for better matching
+    const content = (campaign.title + ' ' + campaign.shortDescription).toLowerCase();
+    
+    // Medical and health related
+    if (content.includes('медицин') || content.includes('здоров') || content.includes('лечени') || 
+        content.includes('больниц') || content.includes('врач')) {
+      return 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
     }
     
-    // Fallback images based on campaign type
+    // Children specific
+    if (content.includes('дет') || content.includes('ребен') || content.includes('школ')) {
+      // Children + medical
+      if (content.includes('медицин') || content.includes('лечени') || content.includes('больниц')) {
+        return 'https://images.unsplash.com/photo-1584820927498-cfe5211fd8bf?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+      }
+      // Children + education
+      else if (content.includes('образован') || content.includes('школ') || content.includes('учеб')) {
+        return 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+      }
+      // General children
+      return 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Animals
+    if (content.includes('живот') || content.includes('собак') || content.includes('кошек') || 
+        content.includes('питом') || content.includes('приют')) {
+      return 'https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Elderly
+    if (content.includes('стар') || content.includes('пожил') || content.includes('пенсионер')) {
+      return 'https://images.unsplash.com/photo-1581579438747-104c53d7fbc4?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Emergency, disasters
+    if (content.includes('катастроф') || content.includes('бедств') || content.includes('помощ') || 
+        content.includes('чрезвычай') || content.includes('срочн')) {
+      return 'https://images.unsplash.com/photo-1583661577195-0c41d36733ec?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Education
+    if (content.includes('образован') || content.includes('книг') || content.includes('учеб') || 
+        content.includes('школ')) {
+      return 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Technology
+    if (content.includes('технолог') || content.includes('цифров') || content.includes('компьютер') ||
+        content.includes('интернет')) {
+      return 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Environment, ecology
+    if (content.includes('эколог') || content.includes('природ') || content.includes('окружающ') ||
+        content.includes('лес') || content.includes('растен')) {
+      return 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Water related
+    if (content.includes('вод') || content.includes('питьев') || content.includes('океан') ||
+        content.includes('мор')) {
+      return 'https://images.unsplash.com/photo-1538300342682-cf57afb97271?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Community projects
+    if (content.includes('сообществ') || content.includes('обществ') || content.includes('город')) {
+      return 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Youth projects
+    if (content.includes('молодеж') || content.includes('подрост')) {
+      return 'https://images.unsplash.com/photo-1529333166437-7cea30f76a12?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb';
+    }
+    
+    // Fallback based on campaign type
     if (campaign.type === 'fund') {
       return 'https://images.unsplash.com/photo-1579208570378-8c970854bc23?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb'; // Organization/fund image
     } else {
