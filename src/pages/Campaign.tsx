@@ -32,6 +32,9 @@ const Campaign = () => {
     imageUrl: campaignData.imageUrl,
     verification: campaignData.verification,
     
+    // Создаем дополнительные поля, если они ожидаются в CampaignDetails
+    organization: campaignData.organization || "Организация",
+    
     // Создаем структуру impact, если она не существует
     impact: {
       title: "Ваше влияние",
@@ -46,14 +49,6 @@ const Campaign = () => {
         percentage: Math.round(100 / (Object.keys(campaignData.impactMetrics || {}).length) * (index + 1)),
         description: impact
       }))
-    },
-    
-    // Создаем структуру organization
-    organization: {
-      name: campaignData.organization || "Организация",
-      description: campaignData.fullDescription || "Описание организации",
-      yearFounded: 2020, // Примерное значение если не указан
-      logo: campaignData.imageUrl
     },
     
     // Используем отзывы из reviews
@@ -85,7 +80,7 @@ const Campaign = () => {
       
       <main className="flex-1 container mx-auto px-4 py-6">
         <CampaignDetails 
-          campaign={campaign}
+          campaign={campaign as any}
           recommendationReason={getRecommendationReason()}
         />
       </main>

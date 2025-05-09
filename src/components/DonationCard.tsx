@@ -1,4 +1,3 @@
-
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -63,11 +62,54 @@ const DonationCard = ({ campaign, donationAmount }: DonationCardProps) => {
     setIsDonationDialogOpen(false);
   };
 
+  // Get appropriate image based on campaign category and type
+  const getCampaignImage = () => {
+    // Primary category-based images
+    const categoryImages: Record<string, string> = {
+      'children': 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'youth': 'https://images.unsplash.com/photo-1529333166437-7cea30f76a12?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'elderly': 'https://images.unsplash.com/photo-1581579438747-104c53d7fbc4?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'animals': 'https://images.unsplash.com/photo-1517022812141-23620dba5c23?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'health': 'https://images.unsplash.com/photo-1505751172876-fa1923c5c528?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'education': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'emergency': 'https://images.unsplash.com/photo-1583661577195-0c41d36733ec?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'local': 'https://images.unsplash.com/photo-1621841752127-a28a17fd46a8?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'technology': 'https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'ecology': 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'community': 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+      'water': 'https://images.unsplash.com/photo-1538300342682-cf57afb97271?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb',
+    };
+    
+    // If there's a valid image URL already, use that
+    if (campaign.imageUrl && campaign.imageUrl.startsWith('http')) {
+      return campaign.imageUrl;
+    }
+    
+    // Otherwise try to find an image based on category
+    if (campaign.category && campaign.category.length > 0) {
+      for (const category of campaign.category) {
+        const lowerCategory = category.toLowerCase();
+        for (const [key, url] of Object.entries(categoryImages)) {
+          if (lowerCategory.includes(key)) {
+            return url;
+          }
+        }
+      }
+    }
+    
+    // Fallback images based on campaign type
+    if (campaign.type === 'fund') {
+      return 'https://images.unsplash.com/photo-1579208570378-8c970854bc23?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb'; // Organization/fund image
+    } else {
+      return 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb'; // Campaign image
+    }
+  };
+
   return (
     <div className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow animate-fade-in">
       <div className="relative">
         <img
-          src={campaign.imageUrl}
+          src={getCampaignImage()}
           alt={campaign.title}
           className="w-full h-48 object-cover"
         />
